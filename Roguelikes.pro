@@ -15,4 +15,12 @@ CONFIG   -= app_bundle
 TEMPLATE = app
 
 
-SOURCES += main.cpp
+SOURCES += main.cpp \
+    character.cpp \
+    monsters.cpp \
+    croom.cpp
+
+HEADERS += \
+    character.h \
+    monsters.h \
+    croom.h
