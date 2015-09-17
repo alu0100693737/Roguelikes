@@ -3,6 +3,8 @@
 
 class CMonsters
 {
+private:
+    int number; //number of monsters for every room
 public:
     CMonsters();
 };

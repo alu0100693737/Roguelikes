@@ -18,9 +18,11 @@ TEMPLATE = app
 SOURCES += main.cpp \
     character.cpp \
     monsters.cpp \
-    croom.cpp
+    croom.cpp \
+    cgame.cpp
 
 HEADERS += \
     character.h \
     monsters.h \
-    croom.h
+    croom.h \
+    cgame.h

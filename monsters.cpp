@@ -1,5 +1,5 @@
 #include "monsters.h"
 
-CMmonsters::CMonsters()
+CMonsters::CMonsters()
 {
 }
