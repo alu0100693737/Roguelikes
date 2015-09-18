@@ -4,9 +4,13 @@
 class CMonsters
 {
 private:
-    int number; //number of monsters for every room
+    int idmonster; //monster identity
 public:
     CMonsters();
+
+    void movemonster(); //distancia Manhattan m, n
+    void kill();
+
 };
 
 #endif // MONSTERS_H

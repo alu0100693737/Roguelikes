@@ -10,6 +10,11 @@ private:
 public:
     CGame();
 
+    CRoom getidrooms(int);
+
+    int getcontdoors(int);
+    void setcontdoors(int);
+
 };
 
 #endif // CGAME_H
