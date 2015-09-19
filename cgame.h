@@ -6,6 +6,7 @@ class CGame
 private:
     CRoom* idrooms; //every room
     int* contdoors; // every room shoud be two doors
+    CCharacter ccharacter_;
 
 public:
     CGame();
@@ -14,6 +15,10 @@ public:
 
     int getcontdoors(int);
     void setcontdoors(int);
+
+    int getlevel();
+    int setlevel();
+
 
 };
 
