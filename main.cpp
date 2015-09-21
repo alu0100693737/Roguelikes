@@ -45,13 +45,17 @@ int main(int argc, char *argv[])
          a = ""; cout << a; cout << endl << endl;
          cout << "\t\t\t\t\t Desarrollado por Ivan Garcia Campos\n" << endl;
 
-         CGame A(3);
+         //CGame A(3);
 
 
 
 
-         CRoom A(10,5);
+         CRoom A(1);
          A.showRoom();
+         CRoom B(2);
+         B.showRoom();
+         CRoom C(3);
+         C.showRoom();
 
 
          /*int** matriz;

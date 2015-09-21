@@ -2,10 +2,11 @@
 #define CGAME_H
 #include "croom.h"
 #include <vector>
+using namespace std;
 class CGame
 {
 private:
-    vector<CRoom> rooms;
+    vector<CRoom*> rooms;
     int* idrooms; //every room, id and object
     int* contdoors; // every room shoud be two doors
     int numrooms;

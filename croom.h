@@ -34,6 +34,8 @@ public:
     int getm();
     int getn();
 
+    void delay(int);//used with rand()
+
 
 
 

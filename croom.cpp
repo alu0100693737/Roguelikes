@@ -11,63 +11,47 @@ CRoom::CRoom(){
     n=0;
 }
 
-CRoom::CRoom(const CRoom& copy)
-{
-    m = copy.getm();
-    n= copy.getn();
-    level = copy.getlevel();
-
-    M_ = new char* [m];
-    if(M_==NULL)
-        cerr << "Error creando la habitacion\n";
-    for(int i= 0; i< sizem; i++)
-    {
-        M_[i]= new char[n];
-    }
-
-    for(int i=0; i< m; i++)
-    {
-        for(int j=0; j< n; j++)
-        {
-            M_[i][j] = copy.pos(i,j);
-        }
-    }
-
-}
-
 CRoom::CRoom(int level)
 {
     M_=NULL;
-    srand(NULL);
-    if(level==1){
-       m = rand()%10+1,(rand()%10+1);
-       n = rand()%10+1,(rand()%10+1);
+    srand(time(NULL));
+    if(level==1){ //we need to stop 1 second to change de rand()
+       delay(1);
+       m = rand()%10+8,(rand()%10+8);
+       delay(1);
+       n = rand()%10+8,(rand()%10+8);
     }
 
     if(level==2){
-       m = rand()%8+1,(rand()%8+1);
-       n = rand()%8+1,(rand()%8+1);
+       delay(1);
+       m = rand()%8+7,(rand()%8+7);
+       delay(1);
+       n = rand()%8+7,(rand()%8+7);
     }
     if(level==3){
-       m = rand()%5+1,(rand()%5+1);
-       n = rand()%5+1,(rand()%5+1);
+       delay(1);
+       m = rand()%5+5,(rand()%5+5);
+       delay(1);
+       n = rand()%5+5,(rand()%5+5);
     }
     //monsters_ = new CMonsters[NUMONSTERS];
-    M_ = new char* [sizem];
+    M_ = new char* [m];
     if(M_==NULL)
         cerr << "Error creando la habitacion\n";
-    for(int i= 0; i< sizem; i++)
+    for(int i= 0; i< m; i++)
     {
-        M_[i]= new char[sizen];
+        M_[i]= new char[n];
     }
-    for(int i=0; i< sizem; i++)
+    cout << "m vale: " << m << endl;
+    cout << "n vale: " << n << endl;
+    for(int i=0; i< m; i++)
     {
-        for(int j=0; j < sizen; j++)
+        for(int j=0; j < n; j++)
         {
-            if((i==0) || (i==sizem-1))
+            if((i==0) || (i==m-1))
             {
                 M_[i][j] = '-';
-            }else if((j==0) || (j==sizen-1)){
+            }else if((j==0) || (j==n-1)){
                 M_[i][j]='|';
             }
             else{
@@ -116,6 +100,10 @@ void CRoom::showRoom()
             cout << M_[i][j] << "  ";
         cout << endl;
     }
+}
+
+void CRoom::delay(int secs) {
+      for(int i = (time(NULL) + secs); time(NULL) != i; time(NULL));
 }
 
 //Falta LEVEL Aun no se utiliza en ningun sitio
