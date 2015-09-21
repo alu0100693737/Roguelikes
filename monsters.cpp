@@ -1,5 +1,6 @@
 #include "monsters.h"
 
-CMonsters::CMonsters()
+CMonsters::CMonsters(int identity)
 {
+    idmonster = identity;
 }

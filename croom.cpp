@@ -1,15 +1,57 @@
 #include "croom.h"
 #include <iostream>
-
+#include <stdlib.h> //srand, rand
+#include <time.h>
 using namespace std;
 
 const int NUMONSTERS = 3;
-CRoom::CRoom(int sizem, int sizen)
+CRoom::CRoom(){
+    M_=NULL;
+    m=0;
+    n=0;
+}
+
+CRoom::CRoom(const CRoom& copy)
+{
+    m = copy.getm();
+    n= copy.getn();
+    level = copy.getlevel();
+
+    M_ = new char* [m];
+    if(M_==NULL)
+        cerr << "Error creando la habitacion\n";
+    for(int i= 0; i< sizem; i++)
+    {
+        M_[i]= new char[n];
+    }
+
+    for(int i=0; i< m; i++)
+    {
+        for(int j=0; j< n; j++)
+        {
+            M_[i][j] = copy.pos(i,j);
+        }
+    }
+
+}
+
+CRoom::CRoom(int level)
 {
     M_=NULL;
-    m =sizem;
-    n=sizen;
+    srand(NULL);
+    if(level==1){
+       m = rand()%10+1,(rand()%10+1);
+       n = rand()%10+1,(rand()%10+1);
+    }
 
+    if(level==2){
+       m = rand()%8+1,(rand()%8+1);
+       n = rand()%8+1,(rand()%8+1);
+    }
+    if(level==3){
+       m = rand()%5+1,(rand()%5+1);
+       n = rand()%5+1,(rand()%5+1);
+    }
     //monsters_ = new CMonsters[NUMONSTERS];
     M_ = new char* [sizem];
     if(M_==NULL)
@@ -76,30 +118,4 @@ void CRoom::showRoom()
     }
 }
 
-/*class CRoom
-{
-private:
-
-    CMonsters* monsters_; //number of monsters for every room
-    char* M_[];//room
-    int m; //min 4, 2 for walls
-    int n; //min 4, 2 for walls
-    int level;
-
-
-
-public:
-    CRoom();
-    int getlevel();
-    int setlevel();
-
-    int getm();
-    int setn();
-
-
-
-    void showRoom();
-};
-
-
-*/
+//Falta LEVEL Aun no se utiliza en ningun sitio

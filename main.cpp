@@ -45,6 +45,10 @@ int main(int argc, char *argv[])
          a = ""; cout << a; cout << endl << endl;
          cout << "\t\t\t\t\t Desarrollado por Ivan Garcia Campos\n" << endl;
 
+         CGame A(3);
+
+
+
 
          CRoom A(10,5);
          A.showRoom();

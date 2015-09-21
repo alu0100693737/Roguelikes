@@ -24,10 +24,12 @@ private:
 
 
 public:
-    CRoom(int, int);
+    CRoom();
+    CRoom(int);
+    //CRoom(const CRoom& a); //not defined
     int pos(int, int);
     int getlevel();
-    int setlevel();
+    void setlevel(int);
 
     int getm();
     int getn();
