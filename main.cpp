@@ -4,20 +4,15 @@
 #include <iostream>
 #include <string>
 #include "croom.h"
-using namespace std;
-void delay(int secs) {
-      for(int i = (time(NULL) + secs); time(NULL) != i; time(NULL));
-      }
+#include "cgame.h"
+#include <ostream>
+#include <fstream>
 
+using namespace std;
 
 int main(int argc, char *argv[])
 {
-
-
-
-
-
-    string a;
+    /*string a;
 
         //delay(2);
     //for(int i=0; i < 30; i++){
@@ -43,42 +38,43 @@ int main(int argc, char *argv[])
 
          cout << a;
          a = ""; cout << a; cout << endl << endl;
-         cout << "\t\t\t\t\t Desarrollado por Ivan Garcia Campos\n" << endl;
+         cout << "\t\t\t\t\t\t\t Desarrollado por Ivan Garcia Campos\n" << endl;
+*/      string a = "";
+         CGame E(3, 1,2);
+          CGame F(2);
+           CGame G(1);
 
-         //CGame A(3);
+         E.showGame();
+         cout << endl << endl;
+         F.showGame();
+         cout << endl << endl;
+         G.showGame();
+       /*  for(int i=0; i< E.getrooms().at(0)->getm(); i++){
+             for(int j=0; j< E.getrooms().at(0)->getn(); j++){
+                cout <<  E.getrooms().at(0)->getdata(i,j) << " ";
+
+                //flush();
+             }cout << endl;
 
 
+        }
+*/
+
+    cout << E.getrooms().at(0)->getm() << " " << E.getrooms().at(0)->getn();
+//Funcionan las habitaciones
+       /*  CRoom A(1);
+        for(int i=0; i< A.getm(); i++){
+            for(int j=0; j<A.getn(); j++)
+                cout << A.getdata(i,j);
+            cout << endl;
 
 
-         CRoom A(1);
+        }/*
          A.showRoom();
          CRoom B(2);
          B.showRoom();
          CRoom C(3);
-         C.showRoom();
-
-
-         /*int** matriz;
-         matriz = new int*[10];
-         for(int i=0; i< 10; i++)
-         {
-             matriz[i] = new int[5];
-         }
-         int cont =0;
-         for(int i=0; i < 10; i++)
-         {    for(int j=0; j< 5; j++)
-             {
-                 matriz[i][j] = cont;
-                 cout << cont << " ";
-                 cont++;
-             }
-             cout << endl;
-         }
-
-*/
-
-
-
+         C.showRoom();*/
 
     //QCoreApplication a(argc, argv);
     //return a.exec();

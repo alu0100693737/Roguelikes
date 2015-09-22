@@ -30,9 +30,10 @@ public:
     int pos(int, int);
     int getlevel();
     void setlevel(int);
-
+    char getdata(int, int);
     int getm();
     int getn();
+
 
     void delay(int);//used with rand()
 

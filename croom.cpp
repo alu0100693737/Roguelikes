@@ -24,15 +24,15 @@ CRoom::CRoom(int level)
 
     if(level==2){
        delay(1);
-       m = rand()%8+7,(rand()%8+7);
+       m = rand()%8+4,(rand()%8+4);
        delay(1);
-       n = rand()%8+7,(rand()%8+7);
+       n = rand()%8+4,(rand()%8+4);
     }
     if(level==3){
        delay(1);
-       m = rand()%5+5,(rand()%5+5);
+       m = rand()%5+1,(rand()%5+1);
        delay(1);
-       n = rand()%5+5,(rand()%5+5);
+       n = rand()%5+1,(rand()%5+1);
     }
     //monsters_ = new CMonsters[NUMONSTERS];
     M_ = new char* [m];
@@ -42,6 +42,7 @@ CRoom::CRoom(int level)
     {
         M_[i]= new char[n];
     }
+
     cout << "m vale: " << m << endl;
     cout << "n vale: " << n << endl;
     for(int i=0; i< m; i++)
@@ -57,9 +58,6 @@ CRoom::CRoom(int level)
             else{
                 M_[i][j] = '*';
             }
-
-
-
         }
     }
 }
@@ -75,6 +73,11 @@ int CRoom::pos(int i, int j)
         return(i-1)*getn()+j-1; //get pos in the matrix
     }
 
+}
+
+char CRoom::getdata(int i, int j){
+        //cout << M_[i][j]<< endl;
+        return M_[i][j];
 }
 
 int CRoom::getm(){

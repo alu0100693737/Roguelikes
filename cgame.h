@@ -14,12 +14,13 @@ private:
     //CCharacter ccharacter_;
 
 public:
-    CGame(int);
+    CGame(int, int, int, int);
+    ~CGame();
     CRoom getrooms(int i);
     void setrooms(int i, CRoom a);
     int getidrooms(int);
     void setidrooms(int, int);
-
+    vector<CRoom*> getrooms();
     int getcontdoors(int);
     void setcontdoors(int, int);
 
