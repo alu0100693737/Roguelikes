@@ -75,7 +75,7 @@ vector<CRoom*> CGame::getrooms(){
     return rooms;
 }
 
-CCharacter CGame::getcharacter(){
+CCharacter* CGame::getcharacter(){
     return ccharacter_;
 }
 
@@ -96,31 +96,6 @@ int CGame::getcontdoors(int id)
 void CGame::setcontdoors(int data, int id)
 {
     contdoors[id] = data;
-}
-
-int CGame::getlevel(int id){
-    return level[id];
-}
-
-void CGame::setlevel(){
-    level+=1; //up the level
-}
-
-
-void CGame::movepj(){
-    if//right
-            //pos[2] += 1;
-             setposyroom(1);
-             getrooms().at(getposroom())->moveright(x, y);
-    if//left
-            setposyroom(-1);
-            getrooms().at(getposroom())->moveleft(x, y);
-    if//up
-            setposxroom(-1);
-            getrooms().at(getposroom())->moveup(x, y);
-    if//down
-            setposxroom(1);
-            getrooms().at(getposroom())->movedown(x, y);
 }
 
 int CGame::getposroom(){
@@ -145,6 +120,31 @@ int CGame::getposyroom(){
 
 void CGame::setposyroom(int y){
     pos[2] = y;
+}
+
+int CGame::getlevel(int id){
+    return level[id];
+}
+
+void CGame::setlevel(){
+    level+=1; //up the level
+}
+
+
+void CGame::movepj(){
+    if//right
+            //pos[2] += 1;
+             getrooms().at(getposroom())->setposyroom(1);
+             getrooms().at((getposroom()))->moveright(1,1);
+    if//left
+            setposyroom(-1);
+            getrooms().at(getposroom())->moveleft(getposxroom(), getposyroom());
+    if//up
+            setposxroom(-1);
+            getrooms().at(getposroom())->moveup(getposxroom(), getposyroom());
+    if//down
+            setposxroom(1);
+            getrooms().at(getposroom())->movedown(getposxroom(), getposyroom());
 }
 
 
