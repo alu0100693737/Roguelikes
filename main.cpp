@@ -40,15 +40,15 @@ int main(int argc, char *argv[])
          a = ""; cout << a; cout << endl << endl;
          cout << "\t\t\t\t\t\t\t Desarrollado por Ivan Garcia Campos\n" << endl;
 */      string a = "";
-         CGame E(3, 1,2);
-          CGame F(2);
-           CGame G(1);
+         CGame E(3, 1,3, 2);
+          CGame F(3,1,2,1 );
+
 
          E.showGame();
-         cout << endl << endl;
+         //cout << "\033[2J\033[1;1H"; //clear linux regexp
+         //cout << endl << endl;
          F.showGame();
          cout << endl << endl;
-         G.showGame();
        /*  for(int i=0; i< E.getrooms().at(0)->getm(); i++){
              for(int j=0; j< E.getrooms().at(0)->getn(); j++){
                 cout <<  E.getrooms().at(0)->getdata(i,j) << " ";

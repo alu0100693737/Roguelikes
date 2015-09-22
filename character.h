@@ -7,6 +7,8 @@ class CCharacter
 private:
     int life;
     bool amuleto;
+    char pj;
+    int* pos;//idroom, x, y
 
 public:
     CCharacter();
@@ -14,6 +16,10 @@ public:
     void setlife(int);
     bool getamuleto();
     bool setamuleto();
+    char getpj();
+    int getposroom();
+    int getposxroom();
+    int getposyroom();
 /*
  * el personaje se asociara a una posicion
  * fija de la primera habitacion y el amuleto se

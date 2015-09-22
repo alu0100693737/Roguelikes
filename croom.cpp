@@ -24,15 +24,15 @@ CRoom::CRoom(int level)
 
     if(level==2){
        delay(1);
-       m = rand()%8+4,(rand()%8+4);
+       m = rand()%8+5,(rand()%8+5);
        delay(1);
-       n = rand()%8+4,(rand()%8+4);
+       n = rand()%8+5,(rand()%8+5);
     }
     if(level==3){
        delay(1);
-       m = rand()%5+1,(rand()%5+1);
+       m = rand()%5+3,(rand()%5+3);
        delay(1);
-       n = rand()%5+1,(rand()%5+1);
+       n = rand()%5+3,(rand()%5+3);
     }
     //monsters_ = new CMonsters[NUMONSTERS];
     M_ = new char* [m];
@@ -94,6 +94,11 @@ int CRoom::getlevel(){
 
 void CRoom::setlevel(int l){
     level=l;
+}
+
+void CRoom::setpjdata(char car, int x, int y)
+{
+    M_[x][y]=car;
 }
 
 void CRoom::showRoom()

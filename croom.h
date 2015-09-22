@@ -31,6 +31,7 @@ public:
     int getlevel();
     void setlevel(int);
     char getdata(int, int);
+    void setpjdata(char, int, int);
     int getm();
     int getn();
 

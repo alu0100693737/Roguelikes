@@ -10,21 +10,21 @@ private:
     int* idrooms; //every room, id and object
     int* contdoors; // every room shoud be two doors
     int numrooms;
-    int level; /*******CUIDADO, TENGO LEVEL EN CADA HAB TB*******/
-    //CCharacter ccharacter_;
+    int* level; /*******CUIDADO, TENGO LEVEL EN CADA HAB TB*******/
+    CCharacter ccharacter_;
 
 public:
     CGame(int, int, int, int);
     ~CGame();
-    CRoom getrooms(int i);
-    void setrooms(int i, CRoom a);
+
+    void setdatapjrooms(char, int ,int);
     int getidrooms(int);
     void setidrooms(int, int);
     vector<CRoom*> getrooms();
     int getcontdoors(int);
     void setcontdoors(int, int);
 
-    int getlevel();
+    int getlevel(int i);
     void setlevel();
 
     void showGame();
