@@ -98,7 +98,35 @@ void CRoom::setlevel(int l){
 
 void CRoom::setpjdata(char car, int x, int y)
 {
+    //cout << x << y << endl;
+    //cout << "Hola"<< endl;
     M_[x][y]=car;
+    //cout << x << y << endl;
+    //cout << M_[0][0] << endl;
+}
+
+void CRoom::moveright(int i, int j){
+    M[i][j]='*';
+    M[i][j+1] ='o';
+
+}
+
+void CRoom::moveleft(int i, int j){
+    M[i][j]='*';
+    M[i][j-1] ='o';
+
+}
+
+void CRoom::moveup(){
+    M[i][j]='*';
+    M[i-1][j] ='o';
+
+}
+
+void CRoom::movedown(){
+    M[i][j]='*';
+    M[i+1][j] ='o';
+
 }
 
 void CRoom::showRoom()

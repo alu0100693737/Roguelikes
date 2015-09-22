@@ -15,11 +15,9 @@ public:
     int getlife();
     void setlife(int);
     bool getamuleto();
-    bool setamuleto();
+    void setamuleto(bool a);
     char getpj();
-    int getposroom();
-    int getposxroom();
-    int getposyroom();
+
 /*
  * el personaje se asociara a una posicion
  * fija de la primera habitacion y el amuleto se
@@ -27,10 +25,6 @@ public:
  * habitacion. Tener en cuenta m y n.
  */
 
-    void moveright();
-    void moveleft();
-    void moveup();
-    void movedown();
 };
 
 #endif // CCHARACTER_H

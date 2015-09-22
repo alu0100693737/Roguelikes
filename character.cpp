@@ -1,11 +1,12 @@
 #include "character.h"
+#include <iostream>
 const int LIMITE=5;
+using namespace std;
 CCharacter::CCharacter()
 {
     life = 5;
     amuleto = false;
-    char pj = '$';
-    int* pos = [0,0,0];//idroom, x, y por defecto
+    char pj = 'o';
 }
 
 int CCharacter::getlife()
@@ -15,7 +16,7 @@ int CCharacter::getlife()
 
 void CCharacter::setlife(int value)
 {
-    if (life + value <= LIMITE))
+    if (life + value <= LIMITE)
         life += value;
 }
 
@@ -33,43 +34,5 @@ char CCharacter::getpj(){
     return pj;
 }
 
-int CCharacter::getposroom(){
-    return pos[0];
-}
 
-int CCharacter::getposxroom(){
-    return pos[1];
-}
 
-int CCharacter::getposyroom(){
-    return pos[2];
-}
-
-class CCharacter
-{
-private:
-    int life;
-    bool amuleto;
-    char pj = '$';
-    int* pos = [0,0,0];//idroom, x, y
-
-public:
-    CCharacter();
-    int getlife();
-    void setlife(int);
-    bool getamuleto();
-    bool setamuleto();
-    char getpj();
-
-/*
- * el personaje se asociara a una posicion
- * fija de la primera habitacion y el amuleto se
- * pondra en una posicion rand() de la tercera
- * habitacion. Tener en cuenta m y n.
- */
-
-    void moveright();
-    void moveleft();
-    void moveup();
-    void movedown();
-};

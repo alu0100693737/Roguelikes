@@ -60,7 +60,7 @@ int main(int argc, char *argv[])
         }
 */
 
-    cout << E.getrooms().at(0)->getm() << " " << E.getrooms().at(0)->getn();
+    //cout << E.getrooms().at(0)->getm() << " " << E.getrooms().at(0)->getn();
 //Funcionan las habitaciones
        /*  CRoom A(1);
         for(int i=0; i< A.getm(); i++){

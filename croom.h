@@ -35,6 +35,12 @@ public:
     int getm();
     int getn();
 
+    //move pj
+    void moveright(int, int);
+    void moveleft(int, int);
+    void moveup(int, int);
+    void movedown(int, int);
+
 
     void delay(int);//used with rand()
 

@@ -15,15 +15,21 @@ CGame::CGame(int nrooms, int id1, int id2, int id3)
     level[0] =id1;
     level[1]= id2;
     level[2]= id3;
+    pos = new int [3];//pos game por defecto 0, 0, 0 (room, x, y)
+    pos[0]=0; //first room
+    for(int i=1; i<3; i++)
+        pos[i]=0;
 
 
+    ccharacter_ = new CCharacter();
     for(int i=0; i< numrooms; i++)
     {
         rooms.push_back(new CRoom(level[i]));
         //catch que el nivel del segundo tenga que ser menor que el primeroo para no desmarcar
         idrooms[i]=i;
     }
-    setdatapjrooms(ccharacter_.getpj(), ccharacter_.getposxroom(), ccharacter_.getposyroom());
+
+    setdatapjrooms('o', 1, 1);
 
     /*srand(time(NULL));
     for(int i=0; i< numrooms; i++)
@@ -69,11 +75,16 @@ vector<CRoom*> CGame::getrooms(){
     return rooms;
 }
 
+CCharacter CGame::getcharacter(){
+    return ccharacter_;
+}
+
 void CGame::setidrooms(int data, int id){
     idrooms[id] = data;
 }
 
 void CGame::setdatapjrooms(char car, int x, int y){
+
     getrooms().at(0)->setpjdata(car, x,y);
 }
 
@@ -96,6 +107,45 @@ void CGame::setlevel(){
 }
 
 
+void CGame::movepj(){
+    if//right
+            //pos[2] += 1;
+             setposyroom(1);
+             getrooms().at(getposroom())->moveright(x, y);
+    if//left
+            setposyroom(-1);
+            getrooms().at(getposroom())->moveleft(x, y);
+    if//up
+            setposxroom(-1);
+            getrooms().at(getposroom())->moveup(x, y);
+    if//down
+            setposxroom(1);
+            getrooms().at(getposroom())->movedown(x, y);
+}
+
+int CGame::getposroom(){
+    return pos[0];
+}
+
+void CGame::setposromm(int p){
+    pos[0] = p;
+}
+
+int CGame::getposxroom(){
+    return pos[1];
+}
+
+void CGame::setposxroom(int x){
+    pos[1] = x;
+}
+
+int CGame::getposyroom(){
+    return pos[2];
+}
+
+void CGame::setposyroom(int y){
+    pos[2] = y;
+}
 
 
 void CGame::showGame(){
