@@ -45,6 +45,8 @@ int main(int argc, char *argv[])
 
 
          E.showGame();
+         for(int i=0; i<20; i++)
+            E.leer();
          //cout << "\033[2J\033[1;1H"; //clear linux regexp
          //cout << endl << endl;
          F.showGame();

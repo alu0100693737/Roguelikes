@@ -18,7 +18,7 @@ CGame::CGame(int nrooms, int id1, int id2, int id3)
     pos = new int [3];//pos game por defecto 0, 0, 0 (room, x, y)
     pos[0]=0; //first room
     for(int i=1; i<3; i++)
-        pos[i]=0;
+        pos[i]=1;
 
 
     ccharacter_ = new CCharacter();
@@ -111,7 +111,7 @@ int CGame::getposxroom(){
 }
 
 void CGame::setposxroom(int x){
-    pos[1] = x;
+    pos[1] += x;
 }
 
 int CGame::getposyroom(){
@@ -119,7 +119,7 @@ int CGame::getposyroom(){
 }
 
 void CGame::setposyroom(int y){
-    pos[2] = y;
+    pos[2] += y;
 }
 
 int CGame::getlevel(int id){
@@ -130,21 +130,55 @@ void CGame::setlevel(){
     level+=1; //up the level
 }
 
+void CGame::leer(){
+    char aux;
+    cout << "\t\tEnter a movement: right(d), left(a), up(w), down(x): " << endl;
+    cin >> aux;
+    cout << getrooms().at((getposroom()))->getm() << " " << getrooms().at((getposroom()))->getn() << endl;
+    if(aux=='d' && getposyroom()<getrooms().at((getposroom()))->getn()-2)//|| aux==ARROW_UP)
+        movepj(1);//right
+    else if(aux=='a'&& getposyroom()>1)
+        movepj(2);//left
+    else if(aux=='w'&& getposxroom()>1)
+        movepj(3);//up
+    else if(aux=='x'&& getposxroom()<getrooms().at((getposroom()))->getm()-2)
+        movepj(4);//down
+    else if ((aux=='a') || (aux=='d') || (aux=='w') || (aux=='x')) //in a wall
+    {
+        cout << "\t\tThere is a wall in that box, try another move" << endl << endl;
+        leer();
+    }
+    else
+    {
+        cout << "\t\tError in the character entered by keyboard. Try another."<< endl << endl;
+        leer();
+    }
+    //movepj(aux);//1 right, 2 left, 3 up, 4 down
+}
 
-void CGame::movepj(){
-    if//right
+void CGame::movepj(int i){
+    if(i==1)//right
+    {
             //pos[2] += 1;
-             getrooms().at(getposroom())->setposyroom(1);
-             getrooms().at((getposroom()))->moveright(1,1);
-    if//left
-            setposyroom(-1);
+             getrooms().at((getposroom()))->moveright(getposxroom(), getposyroom());
+             setposyroom(1);
+    }
+    if(i==2)//left
+    {
             getrooms().at(getposroom())->moveleft(getposxroom(), getposyroom());
-    if//up
-            setposxroom(-1);
+            setposyroom(-1);
+    }
+    if(i==3)//up
+    {
             getrooms().at(getposroom())->moveup(getposxroom(), getposyroom());
-    if//down
-            setposxroom(1);
+            setposxroom(-1);
+    }
+    if(i==4)//down
+    {
             getrooms().at(getposroom())->movedown(getposxroom(), getposyroom());
+            setposxroom(1);
+    }
+    showGame();
 }
 
 

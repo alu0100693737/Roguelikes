@@ -34,9 +34,12 @@ public:
     void setposromm(int);
     void setposxroom(int);
     void setposyroom(int);
+
+    void leer();
+    void movepj(int i);
     void showGame();
 
-    void movepj();
+
 
     //void operator=(CRoom(int, int));
 };
