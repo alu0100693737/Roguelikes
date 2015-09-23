@@ -19,6 +19,9 @@ CGame::CGame(int nrooms, int id1, int id2, int id3)
     pos[0]=0; //first room
     for(int i=1; i<3; i++)
         pos[i]=1;
+    max_mov=10; //max movements
+    doorm = new int[6];
+    doorn = new int [6];
 
 
     ccharacter_ = new CCharacter();
@@ -28,8 +31,38 @@ CGame::CGame(int nrooms, int id1, int id2, int id3)
         //catch que el nivel del segundo tenga que ser menor que el primeroo para no desmarcar
         idrooms[i]=i;
     }
+    srand(time(NULL));
+
+    doorm[0] = (getrooms().at(0)->getm()-1)/2;
+    doorn[0] = getrooms().at(0)->getn()-1;
+
+    doorm[1] = (getrooms().at(1)->getm()-1)/2;
+    doorn[1] = 0;
+
+
+    doorm[2] = (getrooms().at(1)->getm()-1);
+    doorn[2] = (getrooms().at(1)->getn()-1)/2;
+
+    doorm[3] = (getrooms().at(2)->getm()-1)/2;
+    doorn[3] = getrooms().at(2)->getn()-1;
+
+
+    doorm[4] = 0;
+    doorn[4] = (getrooms().at(2)->getn()-1)/2;
+
+    doorm[5] = (getrooms().at(0)->getm()-1);//la ultima puerta de la ultima habitacion a la primera se pondra cuando recojas el amuleto
+    doorn[5] = (getrooms().at(0)->getn()-1)/2;
+
 
     setdatapjrooms('o', 1, 1);
+    getrooms().at(0)->setpjdata('+', doorm[0], doorn[0]);
+    getrooms().at(1)->setpjdata('+', doorm[1], doorn[1]);
+    getrooms().at(1)->setpjdata('+', doorm[2], doorn[2]);
+    getrooms().at(2)->setpjdata('+', doorm[3], doorn[3]);
+    //Cuando se coja el amuleto
+    //getrooms().at(2)->setpjdata('+', doorm[4], doorn[4]);
+    //getrooms().at(0)->setpjdata('+', doorm[5], doorn[5]);
+
 
     /*srand(time(NULL));
     for(int i=0; i< numrooms; i++)
@@ -125,35 +158,100 @@ void CGame::setposyroom(int y){
 int CGame::getlevel(int id){
     return level[id];
 }
+int CGame::getmax_mov(){
+    return max_mov;
+}
+void CGame::setmax_mov(){
+    max_mov--;
+}
+
+void CGame::setmax_mov(int num)//aumentar movimientos, posibles objetos
+{
+    max_mov+=num;
+}
 
 void CGame::setlevel(){
     level+=1; //up the level
 }
 
+
+int CGame::getdoor1m(){
+    return doorm[0];
+}
+
+int CGame::getdoor1n(){
+    return doorn[0];
+}
+
+void CGame::setdoor1m(int m){
+    doorm[0] = m;
+}
+
+void CGame::setdoor1n(int n){
+    doorn[0] = n;
+}
+
+int CGame::getdoor2m(){
+    return doorm[1];
+}
+
+int CGame::getdoor2n(){
+    return doorn[1];
+}
+
+void CGame::setdoor2m(int m){
+    doorm[1] = m;
+}
+
+void CGame::setdoor2n(int n){
+    doorn[1] = n;
+}
+
+int CGame::getdoor3m(){
+    return doorm[2];
+}
+
+int CGame::getdoor3n(){
+    return doorn[2];
+}
+
+void CGame::setdoor3m(int m){
+    doorm[2] = m;
+}
+
+void CGame::setdoor3n(int n){
+    doorn[2] = n;
+}
+
 void CGame::leer(){
+
     char aux;
-    cout << "\t\tEnter a movement: right(d), left(a), up(w), down(x): " << endl;
-    cin >> aux;
-    cout << getrooms().at((getposroom()))->getm() << " " << getrooms().at((getposroom()))->getn() << endl;
-    if(aux=='d' && getposyroom()<getrooms().at((getposroom()))->getn()-2)//|| aux==ARROW_UP)
-        movepj(1);//right
-    else if(aux=='a'&& getposyroom()>1)
-        movepj(2);//left
-    else if(aux=='w'&& getposxroom()>1)
-        movepj(3);//up
-    else if(aux=='x'&& getposxroom()<getrooms().at((getposroom()))->getm()-2)
-        movepj(4);//down
-    else if ((aux=='a') || (aux=='d') || (aux=='w') || (aux=='x')) //in a wall
-    {
-        cout << "\t\tThere is a wall in that box, try another move" << endl << endl;
-        leer();
+    while(getmax_mov()>0){
+        cout << "\t\tEnter a movement: right(d), left(a), up(w), down(x): " << endl;
+        cin >> aux;
+        cout << getrooms().at((getposroom()))->getm() << " " << getrooms().at((getposroom()))->getn() << endl;
+        if(aux=='d' && getposyroom()<getrooms().at((getposroom()))->getn()-2)//|| aux==ARROW_UP)
+            movepj(1);//right
+        else if(aux=='a'&& getposyroom()>1)
+            movepj(2);//left
+        else if(aux=='w'&& getposxroom()>1)
+            movepj(3);//up
+        else if(aux=='x'&& getposxroom()<getrooms().at((getposroom()))->getm()-2)
+            movepj(4);//down
+        else if ((aux=='a') || (aux=='d') || (aux=='w') || (aux=='x')) //in a wall
+        {
+            cout << "\t\tThere is a wall in that box, try another move" << endl << endl;
+            leer();
+        }
+        else
+        {
+            cout << "\t\tError in the character entered by keyboard. Try another."<< endl << endl;
+            leer();
+        }
+        //movepj(aux);//1 right, 2 left, 3 up, 4 down
     }
-    else
-    {
-        cout << "\t\tError in the character entered by keyboard. Try another."<< endl << endl;
-        leer();
-    }
-    //movepj(aux);//1 right, 2 left, 3 up, 4 down
+    if(getmax_mov()==0)
+            cout << "Game over, try again"<< endl;
 }
 
 void CGame::movepj(int i){
@@ -178,7 +276,10 @@ void CGame::movepj(int i){
             getrooms().at(getposroom())->movedown(getposxroom(), getposyroom());
             setposxroom(1);
     }
+    setmax_mov();//-1
     showGame();
+
+
 }
 
 
@@ -261,10 +362,19 @@ void CGame::showGame(){
     cout << "*                                                                               *" << endl;
     }
     string a;
-    cout << "*                      %   %   %   *   *   #   #   =   =   =                    *\n";
-    cout << "*                      R   O   G   U   E   L   I   K   E   S                    *\n";
-    cout << "*                      =   =   =   #   #   *   *   %   %   %                    *\n";
+    cout << "*\t                                %   %   %   *   *   #   #   =   =   =   *\n";
+    if(getmax_mov()>9)
+        cout << "*  Movement:"<< getmax_mov() << "  Lives: " << getcharacter()->getlife() << "\t        R   O   G   U   E   L   I   K   E   S   *\n";
+    else
+        cout << "*  Movement:"<< getmax_mov() << "  Lives: " << getcharacter()->getlife() << "\t                R   O   G   U   E   L   I   K   E   S   *\n";
+    cout << "*\t                                =   =   =   #   #   *   *   %   %   %   *\n";
     cout << "*                                                                               *\n";
     cout << " *******************************************************************************" << endl;
+
+}
+
+
+void CGame::game(){
+
 
 }

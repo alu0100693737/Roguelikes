@@ -23,6 +23,7 @@ private:
 
 
 
+
 public:
     CRoom();
     CRoom(int);
@@ -42,10 +43,9 @@ public:
     void movedown(int, int);
 
 
+
+
     void delay(int);//used with rand()
-
-
-
 
     void showRoom();
 };

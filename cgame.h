@@ -13,6 +13,10 @@ private:
     int numrooms;
     int* level; /*******CUIDADO, TENGO LEVEL EN CADA HAB TB*******/
     int* pos;//idroom, x, y
+    int max_mov;
+    int* doorm;//3 m doors
+    int* doorn;//3 n doors
+
 
 public:
     CGame(int, int, int, int);
@@ -27,6 +31,9 @@ public:
     CCharacter* getcharacter();
     int getlevel(int i);
     void setlevel();
+    int getmax_mov();
+    void setmax_mov();
+    void setmax_mov(int);
 
     int getposroom();
     int getposxroom();
@@ -38,6 +45,21 @@ public:
     void leer();
     void movepj(int i);
     void showGame();
+    void game();
+
+    int getdoor1m();
+    int getdoor1n();
+    void setdoor1m(int);
+    void setdoor1n(int);
+    int getdoor2m();
+    int getdoor2n();
+    void setdoor2m(int);
+    void setdoor2n(int);
+    int getdoor3m();
+    int getdoor3n();
+    void setdoor3m(int);
+    void setdoor3n(int);
+
 
 
 
