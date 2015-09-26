@@ -8,6 +8,17 @@
 using namespace std;
 CGame::CGame(int nrooms, int id1, int id2, int id3)
 {
+    gametable = new char* [35];
+    for(int i=0; i< 35; i++)
+        gametable[i] = new char[40];
+    for(int i=0; i< 35; i++)
+    {        for(int j = 0; j< 40; j++)
+            {   if ( i==0 || i== 34 || j==0 || j==39)
+                    gametable[i][j] = '*';
+                else
+                    gametable[i][j] =' ';
+            }
+    }
     contdoors = new int[2];
     idrooms = new int[nrooms];
     numrooms = nrooms;
@@ -19,9 +30,12 @@ CGame::CGame(int nrooms, int id1, int id2, int id3)
     pos[0]=0; //first room
     for(int i=1; i<3; i++)
         pos[i]=1;
-    max_mov=10; //max movements
+    max_mov=50; //max movements
     doorm = new int[6];
     doorn = new int [6];
+    visitados = new bool [3];
+    for(int i=0; i< 3; i++)
+        visitados[i] = false;
 
 
     ccharacter_ = new CCharacter();
@@ -59,6 +73,51 @@ CGame::CGame(int nrooms, int id1, int id2, int id3)
     getrooms().at(1)->setpjdata('+', doorm[1], doorn[1]);
     getrooms().at(1)->setpjdata('+', doorm[2], doorn[2]);
     getrooms().at(2)->setpjdata('+', doorm[3], doorn[3]);
+
+    //asignacion de rooms a game
+
+    for(int i=0; i< getrooms().at(0)->getm(); i++)
+        for(int j=0; j< getrooms().at(0)->getn(); j++)
+        {
+            setdatatablegame(i+4, j+5, getrooms().at(0)->getdata(i,j));
+        }
+    for(int i=0; i< getrooms().at(1)->getm(); i++)
+        for(int j=0; j< getrooms().at(1)->getn(); j++)
+        {
+            gametable[i+4][j+23] = getrooms().at(1)->getdata(i,j);
+        }
+    for(int i=0; i< getrooms().at(2)->getm(); i++)
+        for(int j=0; j< getrooms().at(2)->getn(); j++)
+        {
+            gametable[i+20][j+15] = getrooms().at(2)->getdata(i,j);
+        }
+    //decoration
+    string a;
+    string b;
+    string c;
+    string d;
+    a = "%%%**##===";
+    for(int i=0; i< a.size(); i++)
+        gametable[28][i+25] = a.at(i);
+
+   // b = "*  Movement:" + getmax_mov();
+   // c= "  Lives: " + getcharacter()->getlife();
+
+
+    a = "ROGUELIKES ";
+    for(int i=0; i< a.size(); i++)
+        gametable[29][i+25] =a.at(i);
+
+    a = "===##**%%%";
+    for(int i=0; i< a.size(); i++)
+        gametable[30][i+25] = a.at(i);
+
+
+    /*if(getmax_mov()>9)
+        a << "*  Movement:"<< getmax_mov() << "  Lives: " << getcharacter()->getlife() << "\t        ROGUELIK   E   S   *\n";
+    else
+        a << "*  Movement:"<< getmax_mov() << "  Lives: " << getcharacter()->getlife() << "\t                R   O   G   U   E   L   I   K   E   S   *\n";
+    a << "*\t                                =   =   =   #   #   *   *   %   %   %   *\n";*/
     //Cuando se coja el amuleto
     //getrooms().at(2)->setpjdata('+', doorm[4], doorn[4]);
     //getrooms().at(0)->setpjdata('+', doorm[5], doorn[5]);
@@ -97,6 +156,14 @@ CGame::~CGame(){
 /*CRoom CGame::getrooms(int i){
     return rooms[i];
 }*/
+
+char CGame::getdatatablegame(int i, int j){
+    return gametable[i][j];
+}
+
+void CGame::setdatatablegame(int i, int j, char a){
+    gametable[i][j]=a;
+}
 
 int CGame::getidrooms(int a)
 {
@@ -175,52 +242,98 @@ void CGame::setlevel(){
 }
 
 
-int CGame::getdoor1m(){
+int CGame::getdoor0m(){
     return doorm[0];
 }
 
-int CGame::getdoor1n(){
+int CGame::getdoor0n(){
     return doorn[0];
 }
 
-void CGame::setdoor1m(int m){
+void CGame::setdoor0m(int m){
     doorm[0] = m;
 }
 
-void CGame::setdoor1n(int n){
+void CGame::setdoor0n(int n){
     doorn[0] = n;
 }
 
-int CGame::getdoor2m(){
+int CGame::getdoor1m(){
     return doorm[1];
 }
 
-int CGame::getdoor2n(){
+int CGame::getdoor1n(){
     return doorn[1];
 }
 
-void CGame::setdoor2m(int m){
+void CGame::setdoor1m(int m){
     doorm[1] = m;
 }
 
-void CGame::setdoor2n(int n){
+void CGame::setdoor1n(int n){
     doorn[1] = n;
 }
 
-int CGame::getdoor3m(){
+int CGame::getdoor2m(){
     return doorm[2];
 }
 
-int CGame::getdoor3n(){
+int CGame::getdoor2n(){
     return doorn[2];
 }
 
-void CGame::setdoor3m(int m){
+void CGame::setdoor2m(int m){
     doorm[2] = m;
 }
 
-void CGame::setdoor3n(int n){
+void CGame::setdoor2n(int n){
     doorn[2] = n;
+}
+
+int CGame::getdoor3m(){
+    return doorm[3];
+}
+
+int CGame::getdoor3n(){
+    return doorn[3];
+}
+
+void CGame::setdoor3m(int m){
+    doorm[3] = m;
+}
+
+void CGame::setdoor3n(int n){
+    doorn[3] = n;
+}
+int CGame::getdoor4m(){
+    return doorm[4];
+}
+
+int CGame::getdoor4n(){
+    return doorn[4];
+}
+
+void CGame::setdoor4m(int m){
+    doorm[4] = m;
+}
+
+void CGame::setdoor4n(int n){
+    doorn[4] = n;
+}
+int CGame::getdoor5m(){
+    return doorm[5];
+}
+
+int CGame::getdoor5n(){
+    return doorn[5];
+}
+
+void CGame::setdoor5m(int m){
+    doorm[5] = m;
+}
+
+void CGame::setdoor5n(int n){
+    doorn[5] = n;
 }
 
 void CGame::leer(){
@@ -230,20 +343,32 @@ void CGame::leer(){
         cout << "\t\tEnter a movement: right(d), left(a), up(w), down(x): " << endl;
         cin >> aux;
         cout << getrooms().at((getposroom()))->getm() << " " << getrooms().at((getposroom()))->getn() << endl;
-        if(aux=='d' && getposyroom()<getrooms().at((getposroom()))->getn()-2)//|| aux==ARROW_UP)
-            movepj(1);//right
+        //if((getrooms().at(getposroom())->getdata(getposxroom(), getposyroom())=='*')||(getrooms().at(getposroom())->getdata(getposxroom(), getposyroom()) =='+')){
+        if((aux=='d' && getposyroom()<getrooms().at((getposroom()))->getn()-2))//|| aux==ARROW_UP)
+                movepj(1);//right
+        else if (aux=='d' && ((getrooms().at((getposroom()))->getdata(getposxroom(),getposyroom()+1)=='+') ||(getrooms().at((getposroom()))->getdata(getposxroom(),getposyroom()+1)=='#'))){
+                movepj(1);//right
+        }
         else if(aux=='a'&& getposyroom()>1)
-            movepj(2);//left
+                movepj(2);//left
+        else if (aux=='a' && ((getrooms().at((getposroom()))->getdata(getposxroom(),getposyroom()-1)=='+')||(getrooms().at((getposroom()))->getdata(getposxroom(),getposyroom()-1)=='#'))){
+                movepj(2);//right
+        }
         else if(aux=='w'&& getposxroom()>1)
-            movepj(3);//up
+                movepj(3);//up
+        else if (aux=='w' && ((getrooms().at((getposroom()))->getdata(getposxroom()-1,getposyroom())=='+')||(getrooms().at((getposroom()))->getdata(getposxroom()-1,getposyroom())=='#'))){
+                movepj(3);//right
+        }
         else if(aux=='x'&& getposxroom()<getrooms().at((getposroom()))->getm()-2)
-            movepj(4);//down
-        else if ((aux=='a') || (aux=='d') || (aux=='w') || (aux=='x')) //in a wall
+                movepj(4);//down
+        else if (aux=='x' && ((getrooms().at((getposroom()))->getdata(getposxroom()+1,getposyroom())=='+')||(getrooms().at((getposroom()))->getdata(getposxroom()+1,getposyroom())=='#'))){
+                movepj(4);//right
+        }
+        else if (((aux=='a') || (aux=='d') || (aux=='w') || (aux=='x'))) //in a wall
         {
             cout << "\t\tThere is a wall in that box, try another move" << endl << endl;
             leer();
-        }
-        else
+        }else
         {
             cout << "\t\tError in the character entered by keyboard. Try another."<< endl << endl;
             leer();
@@ -254,125 +379,118 @@ void CGame::leer(){
             cout << "Game over, try again"<< endl;
 }
 
-void CGame::movepj(int i){
+
+void CGame::movepj(int i){ //rooms (4,5), (4,23), (20, 15)
     if(i==1)//right
     {
             //pos[2] += 1;
              getrooms().at((getposroom()))->moveright(getposxroom(), getposyroom());
-             setposyroom(1);
+             if(getposroom()==0){
+                 setdatatablegame(getposxroom()+4, getposyroom()+5, '*');
+                 setposyroom(1);
+                 setdatatablegame(getposxroom()+4, getposyroom()+5, 'o');
+             }
+             if(getposroom()==1)
+             {
+                 setdatatablegame(getposxroom()+4, getposyroom()+23, '*');
+                 setposyroom(1);
+                 setdatatablegame(getposxroom()+4, getposyroom()+23, 'o');
+             }
+             if(getposroom()==2)
+             {
+                 setdatatablegame(getposxroom()+20, getposyroom()+15, '*');
+                 setposyroom(1);
+                 setdatatablegame(getposxroom()+20, getposyroom()+15, 'o');
+             }
+
     }
     if(i==2)//left
     {
             getrooms().at(getposroom())->moveleft(getposxroom(), getposyroom());
-            setposyroom(-1);
+
+            if(getposroom()==0){
+                setdatatablegame(getposxroom()+4, getposyroom()+5, '*');
+                setposyroom(-1);
+                setdatatablegame(getposxroom()+4, getposyroom()+5, 'o');
+            }
+            if(getposroom()==1)
+            {
+                setdatatablegame(getposxroom()+4, getposyroom()+23, '*');
+                setposyroom(-1);
+                setdatatablegame(getposxroom()+4, getposyroom()+23, 'o');
+            }
+            if(getposroom()==2)
+            {
+                setdatatablegame(getposxroom()+20, getposyroom()+15, '*');
+                setposyroom(-1);
+                setdatatablegame(getposxroom()+20, getposyroom()+15, 'o');
+            }
     }
     if(i==3)//up
     {
             getrooms().at(getposroom())->moveup(getposxroom(), getposyroom());
-            setposxroom(-1);
+            if(getposroom()==0){
+                setdatatablegame(getposxroom()+4, getposyroom()+5, '*');
+                setposxroom(-1);
+                setdatatablegame(getposxroom()+4, getposyroom()+5, 'o');
+            }
+            if(getposroom()==1)
+            {
+                setdatatablegame(getposxroom()+4, getposyroom()+23, '*');
+                setposxroom(-1);
+                setdatatablegame(getposxroom()+4, getposyroom()+23, 'o');
+            }
+            if(getposroom()==2)
+            {
+                setdatatablegame(getposxroom()+20, getposyroom()+15, '*');
+                setposxroom(-1);
+                setdatatablegame(getposxroom()+20, getposyroom()+15, 'o');
+            }
     }
     if(i==4)//down
     {
             getrooms().at(getposroom())->movedown(getposxroom(), getposyroom());
-            setposxroom(1);
+
+            if(getposroom()==0){
+                setdatatablegame(getposxroom()+4, getposyroom()+5, '*');
+                setposxroom(1);
+                setdatatablegame(getposxroom()+4, getposyroom()+5, 'o');
+            }
+            if(getposroom()==1)
+            {
+                setdatatablegame(getposxroom()+4, getposyroom()+23, '*');
+                setposxroom(1);
+                setdatatablegame(getposxroom()+4, getposyroom()+23, 'o');
+            }
+            if(getposroom()==2)
+            {
+                setdatatablegame(getposxroom()+20, getposyroom()+15, '*');
+                setposxroom(1);
+                setdatatablegame(getposxroom()+20, getposyroom()+15, 'o');
+            }
     }
+    if(getdoor0m()==getposxroom() && getdoor0n() == getposyroom() &&getposroom() ==0)
+       {     visitados[0] =true;
+        cout << "visitadooo!" << endl;
+    }if(getdoor2m()==getposxroom() && getdoor2n() == getposyroom() &&getposroom() ==0)
+            visitados[0] =true;
+    if(getdoor4m()==getposxroom() && getdoor4n() == getposyroom() &&getposroom() ==0)
+        visitados[0] =true;
+
     setmax_mov();//-1
-    showGame();
+    showtableGame();
 
 
 }
 
 
-void CGame::showGame(){
-
-
-    cout << "\033[2J\033[1;1H"; //clear linux regexp
-    int contador = 2;
-    int m2 = getrooms().at(1)->getm();
-    int n2= getrooms().at(1)->getn();
-    int auxm2=0;
-    int auxn2=0;
-
-    cout << " ******************************************************************************* " << endl;
-    cout << "*                                                                               *" << endl;
-    cout << "*                                                                               *" << endl;
-
-   /* for(int i=0; i< E.getrooms().at(0)->getm(); i++){
-        for(int j=0; j< E.getrooms().at(0)->getn(); j++){
-           cout <<  E.getrooms().at(0)->getdata(i,j) << " ";
-*/
-           //flush();
-
-        for(int j=0; j < getrooms().at(0)->getm(); j++){
-
-            cout << "*         ";
-            contador =10;
-            for(int k = 0; k < getrooms().at(0)->getn(); k++)
-            {
-                /*for(int n=0; n < rooms.at(1)->getm(); n++){
-                    for(int p=0; p < rooms.at(0)->getn(); p++)
-                    {*/
-                        cout << " " << getrooms().at(0)->getdata(j,k);
-                        contador+=2;
-            }
-            cout << "             ";
-            contador+=13;
-            while (auxn2<n2 && auxm2<m2)
-            {
-                //cout << auxm2 << auxn2 << " ";
-                cout << " " << getrooms().at(1)->getdata(auxm2, auxn2);
-                contador+=2;
-                auxn2++;
-
-            }
-            auxm2++;
-            auxn2 = 0;
-            if (contador<80)
-                for(;contador<80; contador++)
-                    cout <<" ";
-            cout << "*" << endl;
-
-
-        }//first and second room showing
-        for(int i=0; i< 2; i++){
-        cout << "*                                                                               *" << endl;
-        }
-        contador = 0;
-        for(int j=0; j < getrooms().at(2)->getm(); j++){
-
-            cout << "*                                ";
-            contador =10;
-            for(int k = 0; k < getrooms().at(2)->getn(); k++)
-            {
-                /*for(int n=0; n < rooms.at(1)->getm(); n++){
-                    for(int p=0; p < rooms.at(0)->getn(); p++)
-                    {*/
-                        cout << " " << getrooms().at(2)->getdata(j,k);
-                        contador+=2;
-            }
-            if (contador<57)
-                for(;contador<57; contador++)
-                    cout <<" ";
-            cout << "*" << endl;
-        }
-
-
-
-    for(int i=0; i< 1; i++){
-    cout << "*                                                                               *" << endl;
+void CGame::showtableGame(){
+    for(int i=0; i<35; i++){
+        for(int j=0; j< 40; j++)
+            cout << getdatatablegame(i,j) << " ";
+        cout << endl;
     }
-    string a;
-    cout << "*\t                                %   %   %   *   *   #   #   =   =   =   *\n";
-    if(getmax_mov()>9)
-        cout << "*  Movement:"<< getmax_mov() << "  Lives: " << getcharacter()->getlife() << "\t        R   O   G   U   E   L   I   K   E   S   *\n";
-    else
-        cout << "*  Movement:"<< getmax_mov() << "  Lives: " << getcharacter()->getlife() << "\t                R   O   G   U   E   L   I   K   E   S   *\n";
-    cout << "*\t                                =   =   =   #   #   *   *   %   %   %   *\n";
-    cout << "*                                                                               *\n";
-    cout << " *******************************************************************************" << endl;
-
 }
-
 
 void CGame::game(){
 

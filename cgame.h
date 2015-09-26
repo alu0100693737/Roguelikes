@@ -8,6 +8,7 @@ class CGame
 private:
     vector<CRoom*> rooms;
     CCharacter* ccharacter_;
+    char** gametable;
     int* idrooms; //every room, id and object
     int* contdoors; // every room shoud be two doors
     int numrooms;
@@ -16,12 +17,14 @@ private:
     int max_mov;
     int* doorm;//3 m doors
     int* doorn;//3 n doors
+    bool* visitados; //3 direccion
 
 
 public:
     CGame(int, int, int, int);
     ~CGame();
-
+    char getdatatablegame(int, int);
+    void setdatatablegame(int, int, char);
     void setdatapjrooms(char, int ,int);
     int getidrooms(int);
     void setidrooms(int, int);
@@ -44,9 +47,14 @@ public:
 
     void leer();
     void movepj(int i);
-    void showGame();
+    void showtableGame();
     void game();
 
+
+    int getdoor0m();
+    int getdoor0n();
+    void setdoor0m(int);
+    void setdoor0n(int);
     int getdoor1m();
     int getdoor1n();
     void setdoor1m(int);
@@ -59,6 +67,14 @@ public:
     int getdoor3n();
     void setdoor3m(int);
     void setdoor3n(int);
+    int getdoor4m();
+    int getdoor4n();
+    void setdoor4m(int);
+    void setdoor4n(int);
+    int getdoor5m();
+    int getdoor5n();
+    void setdoor5m(int);
+    void setdoor5n(int);
 
 
 

@@ -12,10 +12,10 @@ using namespace std;
 
 int main(int argc, char *argv[])
 {
-    /*string a;
+    string a;
 
         //delay(2);
-    //for(int i=0; i < 30; i++){
+
         a =  "\n\t\t██╗    ██╗███████╗██╗      ██████╗ ██████╗ ███╗   ███╗███████╗    ████████╗ ██████╗ ";
         a += "\n\t\t██║    ██║██╔════╝██║     ██╔════╝██╔═══██╗████╗ ████║██╔════╝    ╚══██╔══╝██╔═══██╗";
         a += "\n\t\t██║ █╗ ██║█████╗  ██║     ██║     ██║   ██║██╔████╔██║█████╗         ██║   ██║   ██║";
@@ -23,11 +23,10 @@ int main(int argc, char *argv[])
         a += "\n\t\t╚███╔███╔╝███████╗███████╗╚██████╗╚██████╔╝██║ ╚═╝ ██║███████╗       ██║   ╚██████╔╝";
         a += "\n\t\t ╚══╝╚══╝ ╚══════╝╚══════╝ ╚═════╝ ╚═════╝ ╚═╝     ╚═╝╚══════╝       ╚═╝    ╚═════╝ ";
 
-        cout << "\033[2J\033[1;1H"; //clear linux regexp
-         cout << a;
-         a = ""; cout << a; cout << endl << endl;
+        //cout << "\033[2J\033[1;1H"; //clear linux regexp
+         //cout << a;
 
-         cout << "\033[2J\033[1;1H";
+        // cout << "\033[2J\033[1;1H";
 
          a =  "\n\t\t██████╗  ██████╗  ██████╗ ██╗   ██╗███████╗██╗     ██╗██╗  ██╗███████╗███████╗";
          a += "\n\t\t██╔══██╗██╔═══██╗██╔════╝ ██║   ██║██╔════╝██║     ██║██║ ██╔╝██╔════╝██╔════╝";
@@ -38,13 +37,13 @@ int main(int argc, char *argv[])
 
          cout << a;
          a = ""; cout << a; cout << endl << endl;
-         cout << "\t\t\t\t\t\t\t Desarrollado por Ivan Garcia Campos\n" << endl;
-*/      string a = "";
+         cout << "\t\t\t\t\t\t\t\t Desarrollado por Ivan Garcia Campos\n" << endl;
+      a = "";
          CGame E(3, 1,2, 3);
           CGame F(3,1,2,1 );
 
 
-         E.showGame();
+         E.showtableGame();
          E.leer();
          //cout << "\033[2J\033[1;1H"; //clear linux regexp
          //cout << endl << endl;
