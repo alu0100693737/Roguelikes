@@ -25,7 +25,7 @@ public:
     ~CGame();
     char getdatatablegame(int, int);
     void setdatatablegame(int, int, char);
-    void setdatapjrooms(char, int ,int);
+    void setdatapjrooms(char, int, int ,int);
     int getidrooms(int);
     void setidrooms(int, int);
     vector<CRoom*> getrooms();
@@ -41,7 +41,7 @@ public:
     int getposroom();
     int getposxroom();
     int getposyroom();
-    void setposromm(int);
+    void setposroom(int);
     void setposxroom(int);
     void setposyroom(int);
 
@@ -77,7 +77,7 @@ public:
     void setdoor5n(int);
 
 
-
+    bool cambioroom; //uso para no cambiar el + cuando se cambia de habitacion
 
     //void operator=(CRoom(int, int));
 };

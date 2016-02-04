@@ -7,7 +7,9 @@
 #include <fstream>
 using namespace std;
 CGame::CGame(int nrooms, int id1, int id2, int id3)
-{
+{   
+    cambioroom=false;
+    
     gametable = new char* [35];
     for(int i=0; i< 35; i++)
         gametable[i] = new char[40];
@@ -68,7 +70,7 @@ CGame::CGame(int nrooms, int id1, int id2, int id3)
     doorn[5] = (getrooms().at(0)->getn()-1)/2;
 
 
-    setdatapjrooms('o', 1, 1);
+    setdatapjrooms('o', 0, 1, 1);
     getrooms().at(0)->setpjdata('+', doorm[0], doorn[0]);
     getrooms().at(1)->setpjdata('+', doorm[1], doorn[1]);
     getrooms().at(1)->setpjdata('+', doorm[2], doorn[2]);
@@ -183,9 +185,9 @@ void CGame::setidrooms(int data, int id){
     idrooms[id] = data;
 }
 
-void CGame::setdatapjrooms(char car, int x, int y){
+void CGame::setdatapjrooms(char car, int level, int x, int y){
 
-    getrooms().at(0)->setpjdata(car, x,y);
+    getrooms().at(level)->setpjdata(car, x,y);
 }
 
 int CGame::getcontdoors(int id)
@@ -202,7 +204,7 @@ int CGame::getposroom(){
     return pos[0];
 }
 
-void CGame::setposromm(int p){
+void CGame::setposroom(int p){
     pos[0] = p;
 }
 
@@ -344,10 +346,39 @@ void CGame::leer(){
         cin >> aux;
         cout << getrooms().at((getposroom()))->getm() << " " << getrooms().at((getposroom()))->getn() << endl;
         //if((getrooms().at(getposroom())->getdata(getposxroom(), getposyroom())=='*')||(getrooms().at(getposroom())->getdata(getposxroom(), getposyroom()) =='+')){
-        if((aux=='d' && getposyroom()<getrooms().at((getposroom()))->getn()-2))//|| aux==ARROW_UP)
+        if((aux=='d' && getposyroom()<getrooms().at((getposroom()))->getn()-2)){//|| aux==ARROW_UP)
+                cout << "Derecha y me encuentro dentro de una habitacion" << endl;
                 movepj(1);//right
-        else if (aux=='d' && ((getrooms().at((getposroom()))->getdata(getposxroom(),getposyroom()+1)=='+') ||(getrooms().at((getposroom()))->getdata(getposxroom(),getposyroom()+1)=='#'))){
-                movepj(1);//right
+                }
+        else if (aux=='d' && ((getrooms().at((getposroom()))->getdata(getposxroom(),getposyroom()+1)==('+')))){
+                movepj(1);
+                cout << "Derecha y me encuentro una +" << endl;
+                cout << "Pulse enter para cambiar a la siguiente habitacion" << endl;
+                char text;
+                cin >> text;
+                if(text == 'd'){
+                    cout << text << endl;
+                    
+                    getrooms().at((getposroom()))->setpjdata('+', getposxroom(),getposyroom()-1);
+                    setposroom(1);
+                    pos[1] = ((getrooms().at(1)->getm()-1)/2);
+                    pos[2] =0; //reset posyroom porque la puerta en la segunda habitacion en y vale cero
+                    cout << "pos x: " << getposxroom() << " pos y: " << getposyroom() << endl;
+                    //setdatatablegame(((getrooms().at(1)->getm()-1)/2), 0, '|');
+                    //setdatapjrooms('o', 1, 1, 1);
+                    //setposyroom(1);
+                    setdatatablegame(getdoor0m()+4,getdoor0n()+5, '+');
+                    cambioroom= true;
+                    setdatatablegame(getdoor1m()+4,getdoor1n()+23, 'o');
+                    cout << "HOLAAA" << endl;
+                    setmax_mov();//-1
+                    showtableGame();
+                }
+        }
+        else if(aux=='d' && ((getrooms().at((getposroom()))->getdata(getposxroom(),getposyroom()+1)==('*')))){
+            cout << "Derecha y me encuentro una *" << endl;
+            movepj(1);//right
+            
         }
         else if(aux=='a'&& getposyroom()>1)
                 movepj(2);//left
@@ -356,17 +387,60 @@ void CGame::leer(){
         }
         else if(aux=='w'&& getposxroom()>1)
                 movepj(3);//up
-        else if (aux=='w' && ((getrooms().at((getposroom()))->getdata(getposxroom()-1,getposyroom())=='+')||(getrooms().at((getposroom()))->getdata(getposxroom()-1,getposyroom())=='#'))){
+        else if (aux=='w' && (getrooms().at((getposroom()))->getdata(getposxroom()-1,getposyroom())=='+')){
+                
                 movepj(3);//right
+                cout << "Pulse enter para cambiar a la siguiente habitacion" << endl;
+                /*char text;
+                cin >> text;
+                if(text == 'd'){
+                    cout << text << endl;
+                    setposroom(1);*/
+                //setdatapjrooms('o', 1, 1, 1);
+                //}
+                    
         }
         else if(aux=='x'&& getposxroom()<getrooms().at((getposroom()))->getm()-2)
                 movepj(4);//down
-        else if (aux=='x' && ((getrooms().at((getposroom()))->getdata(getposxroom()+1,getposyroom())=='+')||(getrooms().at((getposroom()))->getdata(getposxroom()+1,getposyroom())=='#'))){
-                movepj(4);//right
+        else if (aux=='x' && ((getrooms().at((getposroom()))->getdata(getposxroom()+1,getposyroom())=='+'))){
+                movepj(4);//down
+                
+                cout << "Abajo y me encuentro una +" << endl;
+                cout << "Pulse 'x' para cambiar a la siguiente habitacion" << endl;
+                char text;
+                cin >> text;
+                if(text == 'x'){
+                    cout << text << endl;
+                    
+                   /* doorm[1] = (getrooms().at(1)->getm()-1)/2;
+    doorn[1] = 0;*/
+                    /*setposxroom((getrooms().at(1)->getm()-1)/2);
+                    setposyroom(0);*/
+                    
+                    getrooms().at((getposroom()))->setpjdata('+', getposxroom(),getposyroom()-1);
+                    setposroom(2); //room
+                    pos[1] = (getrooms().at(2)->getm()-1)/2; //x
+                    pos[2] = getrooms().at(2)->getn()-1;//y
+                    
+                   
+                    cout << "pos x: " << getposxroom() << " pos y: " << getposyroom() << endl;
+                    //setdatatablegame(((getrooms().at(1)->getm()-1)/2), 0, '|');
+                    //setdatapjrooms('o', 1, 1, 1);
+                    //setposyroom(1);
+                    setdatatablegame(getdoor2m()+4,getdoor2n()+23, '+');
+                    cambioroom= true;
+                    setdatatablegame(getdoor3m()+20,getdoor3n()+15, 'o');
+                    cout << "HOLAAA" << endl;
+                    setmax_mov();//-1
+                    showtableGame();
+                }
         }
+        
         else if (((aux=='a') || (aux=='d') || (aux=='w') || (aux=='x'))) //in a wall
         {
+            cout << "Siguiente casilla: " << getrooms().at((getposroom()))->getdata(getposxroom(),getposyroom()+1) << endl;
             cout << "\t\tThere is a wall in that box, try another move" << endl << endl;
+            
             leer();
         }else
         {
@@ -386,22 +460,32 @@ void CGame::movepj(int i){ //rooms (4,5), (4,23), (20, 15)
             //pos[2] += 1;
              getrooms().at((getposroom()))->moveright(getposxroom(), getposyroom());
              if(getposroom()==0){
-                 setdatatablegame(getposxroom()+4, getposyroom()+5, '*');
+                 if(cambioroom==false)
+                    setdatatablegame(getposxroom()+4, getposyroom()+5, '*');
+                 else
+                     setdatatablegame(getposxroom()+4, getposyroom()+5, '+');
                  setposyroom(1);
                  setdatatablegame(getposxroom()+4, getposyroom()+5, 'o');
              }
              if(getposroom()==1)
              {
-                 setdatatablegame(getposxroom()+4, getposyroom()+23, '*');
+                 if(cambioroom==false)
+                    setdatatablegame(getposxroom()+4, getposyroom()+23, '*');
+                 else
+                     setdatatablegame(getposxroom()+4, getposyroom()+23, '+');
                  setposyroom(1);
                  setdatatablegame(getposxroom()+4, getposyroom()+23, 'o');
              }
              if(getposroom()==2)
-             {
-                 setdatatablegame(getposxroom()+20, getposyroom()+15, '*');
+             {   if(cambioroom==false)
+                    setdatatablegame(getposxroom()+20, getposyroom()+15, '*');
+                 else
+                    setdatatablegame(getposxroom()+20, getposyroom()+15, '+');
+                 
                  setposyroom(1);
                  setdatatablegame(getposxroom()+20, getposyroom()+15, 'o');
              }
+             cambioroom=false;
 
     }
     if(i==2)//left
@@ -469,13 +553,6 @@ void CGame::movepj(int i){ //rooms (4,5), (4,23), (20, 15)
                 setdatatablegame(getposxroom()+20, getposyroom()+15, 'o');
             }
     }
-    if(getdoor0m()==getposxroom() && getdoor0n() == getposyroom() &&getposroom() ==0)
-       {     visitados[0] =true;
-        cout << "visitadooo!" << endl;
-    }if(getdoor2m()==getposxroom() && getdoor2n() == getposyroom() &&getposroom() ==0)
-            visitados[0] =true;
-    if(getdoor4m()==getposxroom() && getdoor4n() == getposyroom() &&getposroom() ==0)
-        visitados[0] =true;
 
     setmax_mov();//-1
     showtableGame();
