@@ -2,6 +2,8 @@
 #define CGAME_H
 #include "croom.h"
 #include <vector>
+
+#include <time.h>
 using namespace std;
 class CGame
 {
@@ -18,6 +20,7 @@ private:
     int* doorm;//3 m doors
     int* doorn;//3 n doors
     bool* visitados; //3 direccion
+    bool primermovimiento; //se ha realizado el primer movimiento para poder marcar el nodo de salida?
 
 
 public:
@@ -75,7 +78,8 @@ public:
     int getdoor5n();
     void setdoor5m(int);
     void setdoor5n(int);
-
+    
+    void delay(int secs);
 
     bool cambioroom; //uso para no cambiar el + cuando se cambia de habitacion
 

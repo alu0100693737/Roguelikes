@@ -9,6 +9,7 @@ using namespace std;
 CGame::CGame(int nrooms, int id1, int id2, int id3)
 {   
     cambioroom=false;
+    primermovimiento=false;
     
     gametable = new char* [35];
     for(int i=0; i< 35; i++)
@@ -78,6 +79,12 @@ CGame::CGame(int nrooms, int id1, int id2, int id3)
     getrooms().at(2)->setpjdata('+', doorm[4], doorn[4]);
     //enseñar ultima puerta
     getrooms().at(0)->setpjdata('=', doorm[5], doorn[5]);
+    srand(time(NULL));
+    delay(1);
+    int num1 = rand()% getrooms().at(2)->getm();
+    delay(1);
+    int num2= (rand()%getrooms().at(2)->getn());
+    getrooms().at(2)->setpjdata('$', num1, num2);
 
 
     //asignacion de rooms a game
@@ -343,17 +350,41 @@ void CGame::setdoor5n(int n){
 }
 
 void CGame::leer(){
-
     char aux;
     while(getmax_mov()>0){
+        
+        cout << "Le quedan: " << getmax_mov() << " ";
+        if(ccharacter_->getamuleto()==true){
+            cout << "Tiene el amuleto." << endl;
+            cout << "Debes volver a la posicion de salida para finalizar el juego" << endl;
+        }
+        else 
+            cout << endl;
+        
+        if((getposroom()==0) && (getposxroom() ==1) && (getposyroom() ==1) && (ccharacter_->getamuleto()==true)){
+            cout << "Juego terminado!!!!!!\n Felicidades!" << endl;
+            return;
+            
+        }
         cout << "\t\tEnter a movement: right(d), left(a), up(w), down(x): " << endl;
         cin >> aux;
         cout << getrooms().at((getposroom()))->getm() << " " << getrooms().at((getposroom()))->getn() << endl;
         //if((getrooms().at(getposroom())->getdata(getposxroom(), getposyroom())=='*')||(getrooms().at(getposroom())->getdata(getposxroom(), getposyroom()) =='+')){
-        if((aux=='d' && getposyroom()<getrooms().at((getposroom()))->getn()-2)){//|| aux==ARROW_UP)
+            
+        if (aux=='d' && ((getrooms().at((getposroom()))->getdata(getposxroom(),getposyroom()+1)==('$')))){//nos encontramos un amuleto
+        ccharacter_->setamuleto(true);
+        cout << "Debes volver a la posicion de salida para finalizar el juego" << endl;
+        setdatatablegame(getposxroom()+20, getposyroom()+16, 'X');
+        showtableGame();
+        //getrooms().at((getposroom()))->setpjdata('X', getposxroom(),getposyroom()+1);
+        //movepj(1);
+            
+        }
+        else if((aux=='d' && getposyroom()<getrooms().at((getposroom()))->getn()-2)){//|| aux==ARROW_UP)
                 cout << "Derecha y me encuentro dentro de una habitacion" << endl;
                 movepj(1);//right
                 }
+            
         else if (aux=='d' && ((getrooms().at((getposroom()))->getdata(getposxroom(),getposyroom()+1)==('+')))){
                 movepj(1);
                 cout << "Derecha y me encuentro una +" << endl;
@@ -380,18 +411,37 @@ void CGame::leer(){
                     showtableGame();
                 }
         }
-        else if(aux=='d' && ((getrooms().at((getposroom()))->getdata(getposxroom(),getposyroom()+1)==('*')))){
+        /*else if(aux=='d' && ((getrooms().at((getposroom()))->getdata(getposxroom(),getposyroom()+1)==('*')))){
             cout << "Derecha y me encuentro una *" << endl;
             movepj(1);//right
+            
+        }*/
+       else if (aux=='a' && ((getrooms().at((getposroom()))->getdata(getposxroom(),getposyroom()-1)==('$')))){//nos encontramos un amuleto
+            ccharacter_->setamuleto(true);
+            cout << "Debes volver a la posicion de salida para finalizar el juego" << endl;
+            setdatatablegame(getposxroom()+20, getposyroom()+14, 'X');
+            showtableGame();
+            //getrooms().at((getposroom()))->setpjdata('X', getposxroom(),getposyroom()-1);
+            //movepj(2);//left
             
         }
         else if(aux=='a'&& getposyroom()>1)
                 movepj(2);//left
-        else if (aux=='a' && ((getrooms().at((getposroom()))->getdata(getposxroom(),getposyroom()-1)=='+')||(getrooms().at((getposroom()))->getdata(getposxroom(),getposyroom()-1)=='#'))){
+
+        /*else if (aux=='a' && ((getrooms().at((getposroom()))->getdata(getposxroom(),getposyroom()-1)=='+')||(getrooms().at((getposroom()))->getdata(getposxroom(),getposyroom()-1)=='#'))){
                 movepj(2);//right
+        }*/
+        else if (aux=='w' && ((getrooms().at((getposroom()))->getdata(getposxroom()-1,getposyroom())==('$')))){//nos encontramos un amuleto
+                ccharacter_->setamuleto(true);
+                cout << "Debes volver a la posicion de salida para finalizar el juego" << endl;
+                setdatatablegame(getposxroom()+19, getposyroom()+15, 'X');
+                showtableGame();
+                //getrooms().at((getposroom()))->setpjdata('X', getposxroom()-1,getposyroom());
+                //movepj(3);//up
         }
         else if(aux=='w'&& getposxroom()>1)
                 movepj(3);//up
+        
         else if (aux=='w' && (getrooms().at((getposroom()))->getdata(getposxroom()-1,getposyroom())=='+')){
                 
             
@@ -429,8 +479,17 @@ void CGame::leer(){
                 }
                     
         }
+        else if (aux=='x' && ((getrooms().at((getposroom()))->getdata(getposxroom()+1,getposyroom())==('$')))){//nos encontramos un amuleto
+                    ccharacter_->setamuleto(true);
+                    cout << "Debes volver a la posicion de salida para finalizar el juego" << endl;
+                    setdatatablegame(getposxroom()+21, getposyroom()+15, 'X');
+                    showtableGame();
+                    //getrooms().at((getposroom()))->setpjdata('X', getposxroom()+1,getposyroom());
+                    //movepj(4);
+        }
         else if(aux=='x'&& getposxroom()<getrooms().at((getposroom()))->getm()-2)
                 movepj(4);//down
+        
         else if (aux=='x' && ((getrooms().at((getposroom()))->getdata(getposxroom()+1,getposyroom())=='+'))){
                 movepj(4);//down
                 
@@ -491,13 +550,15 @@ void CGame::movepj(int i){ //rooms (4,5), (4,23), (20, 15)
              if(getposroom()==0){
                  if(cambioroom==false)
                     setdatatablegame(getposxroom()+4, getposyroom()+5, '*');
-                 else
+                 else{
                      setdatatablegame(getposxroom()+4, getposyroom()+5, '+');
+                }
                  setposyroom(1);
                  setdatatablegame(getposxroom()+4, getposyroom()+5, 'o');
              }
              if(getposroom()==1)
              {
+                 cout << "No puedes volver a la primera habitacion" << endl;
                  if(cambioroom==false)
                     setdatatablegame(getposxroom()+4, getposyroom()+23, '*');
                  else
@@ -506,7 +567,9 @@ void CGame::movepj(int i){ //rooms (4,5), (4,23), (20, 15)
                  setdatatablegame(getposxroom()+4, getposyroom()+23, 'o');
              }
              if(getposroom()==2)
-             {   if(cambioroom==false)
+             {   
+                 cout << "No puedes volver a la segunda habitacion" << endl;
+                 if(cambioroom==false)
                     setdatatablegame(getposxroom()+20, getposyroom()+15, '*');
                  else
                     setdatatablegame(getposxroom()+20, getposyroom()+15, '+');
@@ -531,6 +594,7 @@ void CGame::movepj(int i){ //rooms (4,5), (4,23), (20, 15)
             }
             if(getposroom()==1)
             {
+                cout << "No puedes volver a la primera habitacion" << endl;
                 if(cambioroom==false)
                     setdatatablegame(getposxroom()+4, getposyroom()+23, '*');
                  else
@@ -540,6 +604,7 @@ void CGame::movepj(int i){ //rooms (4,5), (4,23), (20, 15)
             }
             if(getposroom()==2)
             {
+                cout << "No puedes volver a la segunda habitacion" << endl;
                 if(cambioroom==false)
                     setdatatablegame(getposxroom()+20, getposyroom()+15, '*');
                  else
@@ -547,6 +612,7 @@ void CGame::movepj(int i){ //rooms (4,5), (4,23), (20, 15)
                 setposyroom(-1);
                 setdatatablegame(getposxroom()+20, getposyroom()+15, 'o');
             }
+            cambioroom=false;
     }
     if(i==3)//up
     {
@@ -561,6 +627,7 @@ void CGame::movepj(int i){ //rooms (4,5), (4,23), (20, 15)
             }
             if(getposroom()==1)
             {
+                cout << "No puedes volver a la primera habitacion" << endl;
                 if(cambioroom==false)
                     setdatatablegame(getposxroom()+4, getposyroom()+23, '*');
                  else
@@ -570,6 +637,7 @@ void CGame::movepj(int i){ //rooms (4,5), (4,23), (20, 15)
             }
             if(getposroom()==2)
             {
+                cout << "No puedes volver a la segunda habitacion" << endl;
                 if(cambioroom==false)
                     setdatatablegame(getposxroom()+20, getposyroom()+15, '*');
                  else
@@ -577,6 +645,7 @@ void CGame::movepj(int i){ //rooms (4,5), (4,23), (20, 15)
                 setposxroom(-1);
                 setdatatablegame(getposxroom()+20, getposyroom()+15, 'o');
             }
+            cambioroom=false;
     }
     if(i==4)//down
     {
@@ -592,6 +661,7 @@ void CGame::movepj(int i){ //rooms (4,5), (4,23), (20, 15)
             }
             if(getposroom()==1)
             {
+                cout << "No puedes volver a la primera habitacion" << endl;
                 if(cambioroom==false)
                     setdatatablegame(getposxroom()+4, getposyroom()+23, '*');
                  else
@@ -601,19 +671,22 @@ void CGame::movepj(int i){ //rooms (4,5), (4,23), (20, 15)
             }
             if(getposroom()==2)
             {
+                cout << "No puedes volver a la segunda habitacion" << endl;
                 if(cambioroom==false)
                     setdatatablegame(getposxroom()+20, getposyroom()+15, '*');
                  else
                      setdatatablegame(getposxroom()+20, getposyroom()+15, '+');
                 setposxroom(1);
                 setdatatablegame(getposxroom()+20, getposyroom()+15, 'o');
-            }
+            }cambioroom=false;
     }
 
     setmax_mov();//-1
+    if(primermovimiento==false){
+        primermovimiento= true;
+        setdatatablegame(5, 6,'U');//marcamos la casilla de salida
+    }
     showtableGame();
-
-
 }
 
 
@@ -629,3 +702,7 @@ void CGame::game(){
 
 
 }
+
+ void CGame::delay(int secs) {
+      for(int i = (time(NULL) + secs); time(NULL) != i; time(NULL));
+};
