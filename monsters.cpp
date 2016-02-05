@@ -1,6 +1,17 @@
 #include "monsters.h"
 
-CMonsters::CMonsters(int identity)
+CMonsters::CMonsters()
 {
-    idmonster = identity;
+    monsters_ = 4;
+    maxgolpes_= 3;
+    
+}
+
+void CMonsters::kill(){
+    maxgolpes_--;
+    if(maxgolpes_<0)
+        cout << "Un monstruo te ha matado!... Le quedan " << maxgolpes_ << "vidas" << endl;
+    else
+        cout << "Ha perdido. " << endl;
+    
 }

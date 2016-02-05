@@ -17,9 +17,9 @@ CRoom::CRoom(int level)
     srand(time(NULL));
     if(level==1){ //we need to stop 1 second to change de rand()
        delay(1);
-       m = rand()%10+8,(rand()%10+8);
+       m = rand()%10+9,(rand()%10+8);
        delay(1);
-       n = rand()%10+8,(rand()%10+8);
+       n = rand()%10+7,(rand()%10+7);
     }
 
     if(level==2){
@@ -43,8 +43,8 @@ CRoom::CRoom(int level)
         M_[i]= new char[n];
     }
 
-    cout << "m vale: " << m << endl;
-    cout << "n vale: " << n << endl;
+    //cout << "m vale: " << m << endl;
+    //cout << "n vale: " << n << endl;
     for(int i=0; i< m; i++)
     {
         for(int j=0; j < n; j++)

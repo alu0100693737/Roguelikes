@@ -10,6 +10,13 @@ class CGame
 private:
     vector<CRoom*> rooms;
     CCharacter* ccharacter_;
+    
+    int* monsters_;
+    int* posmonstersx_;
+    int* posmonstersy_;
+    int nummonsters_;
+    int maxgolpes_;
+    
     char** gametable;
     int* idrooms; //every room, id and object
     int* contdoors; // every room shoud be two doors

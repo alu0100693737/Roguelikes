@@ -40,7 +40,7 @@ int main(int argc, char *argv[])
          cout << "\t\t\t\t\t\t\t\t Desarrollado por Ivan Garcia Campos\n" << endl;
       a = "";
          CGame E(3, 1,2, 3);
-          CGame F(3,1,2,1 );
+         
 
 
          E.showtableGame();
