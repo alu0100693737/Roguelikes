@@ -75,6 +75,10 @@ CGame::CGame(int nrooms, int id1, int id2, int id3)
     getrooms().at(1)->setpjdata('+', doorm[1], doorn[1]);
     getrooms().at(1)->setpjdata('+', doorm[2], doorn[2]);
     getrooms().at(2)->setpjdata('+', doorm[3], doorn[3]);
+    getrooms().at(2)->setpjdata('+', doorm[4], doorn[4]);
+    //enseñar ultima puerta
+    getrooms().at(0)->setpjdata('=', doorm[5], doorn[5]);
+
 
     //asignacion de rooms a game
 
@@ -372,6 +376,7 @@ void CGame::leer(){
                     setdatatablegame(getdoor1m()+4,getdoor1n()+23, 'o');
                     cout << "HOLAAA" << endl;
                     setmax_mov();//-1
+                    
                     showtableGame();
                 }
         }
@@ -389,15 +394,39 @@ void CGame::leer(){
                 movepj(3);//up
         else if (aux=='w' && (getrooms().at((getposroom()))->getdata(getposxroom()-1,getposyroom())=='+')){
                 
-                movepj(3);//right
-                cout << "Pulse enter para cambiar a la siguiente habitacion" << endl;
-                /*char text;
+            
+                movepj(3);//up
+                
+                cout << "Arriba y me encuentro una +" << endl;
+                cout << "Pulse 'w' para cambiar a la siguiente habitacion" << endl;
+                char text;
                 cin >> text;
-                if(text == 'd'){
+                if(text == 'w'){
                     cout << text << endl;
-                    setposroom(1);*/
-                //setdatapjrooms('o', 1, 1, 1);
-                //}
+                    
+                   /* doorm[1] = (getrooms().at(1)->getm()-1)/2;
+    doorn[1] = 0;*/
+                    /*setposxroom((getrooms().at(1)->getm()-1)/2);
+                    setposyroom(0);*/
+                    
+                    getrooms().at((getposroom()))->setpjdata('+', getposxroom(),getposyroom()-1);
+                    setposroom(0); //room
+                    
+                    pos[1] = (getrooms().at(0)->getm()-1);//la ultima puerta de la ultima habitacion a la primera se pondra cuando recojas el amuleto
+                    pos[2] = (getrooms().at(0)->getn()-1)/2;
+                    
+                   
+                    cout << "pos x: " << getposxroom() << " pos y: " << getposyroom() << endl;
+                    //setdatatablegame(((getrooms().at(1)->getm()-1)/2), 0, '|');
+                    //setdatapjrooms('o', 1, 1, 1);
+                    //setposyroom(1);
+                    setdatatablegame(getdoor4m()+20,getdoor4n()+15, '+');
+                    cambioroom= true;
+                    setdatatablegame(getdoor5m()+4,getdoor5n()+5, 'o');
+                    cout << "HOLAAA" << endl;
+                    setmax_mov();//-1
+                    showtableGame();
+                }
                     
         }
         else if(aux=='x'&& getposxroom()<getrooms().at((getposroom()))->getm()-2)
@@ -493,19 +522,28 @@ void CGame::movepj(int i){ //rooms (4,5), (4,23), (20, 15)
             getrooms().at(getposroom())->moveleft(getposxroom(), getposyroom());
 
             if(getposroom()==0){
-                setdatatablegame(getposxroom()+4, getposyroom()+5, '*');
+                 if(cambioroom==false)
+                    setdatatablegame(getposxroom()+4, getposyroom()+5, '*');
+                 else
+                     setdatatablegame(getposxroom()+4, getposyroom()+5, '+');
                 setposyroom(-1);
                 setdatatablegame(getposxroom()+4, getposyroom()+5, 'o');
             }
             if(getposroom()==1)
             {
-                setdatatablegame(getposxroom()+4, getposyroom()+23, '*');
+                if(cambioroom==false)
+                    setdatatablegame(getposxroom()+4, getposyroom()+23, '*');
+                 else
+                     setdatatablegame(getposxroom()+4, getposyroom()+23, '+');
                 setposyroom(-1);
                 setdatatablegame(getposxroom()+4, getposyroom()+23, 'o');
             }
             if(getposroom()==2)
             {
-                setdatatablegame(getposxroom()+20, getposyroom()+15, '*');
+                if(cambioroom==false)
+                    setdatatablegame(getposxroom()+20, getposyroom()+15, '*');
+                 else
+                     setdatatablegame(getposxroom()+20, getposyroom()+15, '+');
                 setposyroom(-1);
                 setdatatablegame(getposxroom()+20, getposyroom()+15, 'o');
             }
@@ -514,19 +552,28 @@ void CGame::movepj(int i){ //rooms (4,5), (4,23), (20, 15)
     {
             getrooms().at(getposroom())->moveup(getposxroom(), getposyroom());
             if(getposroom()==0){
-                setdatatablegame(getposxroom()+4, getposyroom()+5, '*');
+                if(cambioroom==false)
+                    setdatatablegame(getposxroom()+4, getposyroom()+5, '*');
+                 else
+                     setdatatablegame(getposxroom()+4, getposyroom()+5, '+');
                 setposxroom(-1);
                 setdatatablegame(getposxroom()+4, getposyroom()+5, 'o');
             }
             if(getposroom()==1)
             {
-                setdatatablegame(getposxroom()+4, getposyroom()+23, '*');
+                if(cambioroom==false)
+                    setdatatablegame(getposxroom()+4, getposyroom()+23, '*');
+                 else
+                     setdatatablegame(getposxroom()+4, getposyroom()+23, '+');
                 setposxroom(-1);
                 setdatatablegame(getposxroom()+4, getposyroom()+23, 'o');
             }
             if(getposroom()==2)
             {
-                setdatatablegame(getposxroom()+20, getposyroom()+15, '*');
+                if(cambioroom==false)
+                    setdatatablegame(getposxroom()+20, getposyroom()+15, '*');
+                 else
+                     setdatatablegame(getposxroom()+20, getposyroom()+15, '+');
                 setposxroom(-1);
                 setdatatablegame(getposxroom()+20, getposyroom()+15, 'o');
             }
@@ -536,19 +583,28 @@ void CGame::movepj(int i){ //rooms (4,5), (4,23), (20, 15)
             getrooms().at(getposroom())->movedown(getposxroom(), getposyroom());
 
             if(getposroom()==0){
-                setdatatablegame(getposxroom()+4, getposyroom()+5, '*');
+                if(cambioroom==false)
+                    setdatatablegame(getposxroom()+4, getposyroom()+5, '*');
+                 else
+                     setdatatablegame(getposxroom()+4, getposyroom()+5, '+');
                 setposxroom(1);
                 setdatatablegame(getposxroom()+4, getposyroom()+5, 'o');
             }
             if(getposroom()==1)
             {
-                setdatatablegame(getposxroom()+4, getposyroom()+23, '*');
+                if(cambioroom==false)
+                    setdatatablegame(getposxroom()+4, getposyroom()+23, '*');
+                 else
+                     setdatatablegame(getposxroom()+4, getposyroom()+23, '+');
                 setposxroom(1);
                 setdatatablegame(getposxroom()+4, getposyroom()+23, 'o');
             }
             if(getposroom()==2)
             {
-                setdatatablegame(getposxroom()+20, getposyroom()+15, '*');
+                if(cambioroom==false)
+                    setdatatablegame(getposxroom()+20, getposyroom()+15, '*');
+                 else
+                     setdatatablegame(getposxroom()+20, getposyroom()+15, '+');
                 setposxroom(1);
                 setdatatablegame(getposxroom()+20, getposyroom()+15, 'o');
             }
