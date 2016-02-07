@@ -6,6 +6,7 @@
     #include <ostream>
     #include <fstream>
     #include <cmath>
+    #include <string>     // std::string, std::to_string
     using namespace std;
     CGame::CGame(int nrooms, int id1, int id2, int id3)
     {   
@@ -147,7 +148,15 @@
         a = "%%%**##===";
         for(int i=0; i< a.size(); i++)
             gametable[28][i+25] = a.at(i);
-
+        
+        a= "VIDA:" ;
+        cout << "size de VIDA: " << a.size() << endl;
+        //<< maxgolpes_.to_string();
+        
+        
+        for(int l=0; l< a.size(); l++)
+            gametable[29][l+7] =a.at(l);
+        setdatatablegame(29, 13,51);//marcamos la casilla de salida
     // b = "*  Movement:" + getmax_mov();
     // c= "  Lives: " + getcharacter()->getlife();
 
@@ -385,6 +394,8 @@
     }
 
     void CGame::leer(){
+        //si el monstruo ha matado al personaje principal, return
+        int valormuerte = 0; // si vale 1, fin del programa
         char aux;
         while(getmax_mov()>0){
             
@@ -401,10 +412,7 @@
                 return;
                 
             }
-            if(maxgolpes_ ==0){
-                cout << "Has muerto. " << endl;
-                return;
-            }
+
             cout << "\t\tEnter a movement: right(d), left(a), up(w), down(x): " << endl;
             cin >> aux;
             cout << getrooms().at((getposroom()))->getm() << " " << getrooms().at((getposroom()))->getn() << endl;
@@ -421,11 +429,15 @@
             }
             else if((aux=='d' && getposyroom()<getrooms().at((getposroom()))->getn()-2)){//|| aux==ARROW_UP)
                     cout << "Derecha y me encuentro dentro de una habitacion" << endl;
-                    movepj(1);//right
+                    valormuerte= movepj(1);//right
+                    if(valormuerte==1)
+                        break;
                     }
                 
             else if (aux=='d' && ((getrooms().at((getposroom()))->getdata(getposxroom(),getposyroom()+1)==('+')))){
-                    movepj(1);
+                    valormuerte= movepj(1);
+                    if(valormuerte==1)
+                        break;
                     cout << "Derecha y me encuentro una +" << endl;
                     cout << "Pulse enter para cambiar a la siguiente habitacion" << endl;
                     char text;
@@ -465,7 +477,9 @@
                 
             }
             else if(aux=='a'&& getposyroom()>1)
-                    movepj(2);//left
+                    valormuerte= movepj(2);//left
+                    if(valormuerte==1)
+                        break;
 
             /*else if (aux=='a' && ((getrooms().at((getposroom()))->getdata(getposxroom(),getposyroom()-1)=='+')||(getrooms().at((getposroom()))->getdata(getposxroom(),getposyroom()-1)=='#'))){
                     movepj(2);//right
@@ -479,13 +493,16 @@
                     //movepj(3);//up
             }
             else if(aux=='w'&& getposxroom()>1)
-                    movepj(3);//up
-            
+                    valormuerte= movepj(3);//up
+                    if(valormuerte==1)
+                        break;
+                    
             else if (aux=='w' && (getrooms().at((getposroom()))->getdata(getposxroom()-1,getposyroom())=='+')){
                     
                 
-                    movepj(3);//up
-                    
+                    valormuerte= movepj(3);//up
+                    if(valormuerte==1)
+                        break;
                     cout << "Arriba y me encuentro una +" << endl;
                     cout << "Pulse 'w' para cambiar a la siguiente habitacion" << endl;
                     char text;
@@ -581,7 +598,7 @@
     }
 
 
-    void CGame::movepj(int i){ //rooms (4,5), (4,23), (20, 15)
+    int CGame::movepj(int i){ //rooms (4,5), (4,23), (20, 15)
         if(i==1)//right
         {
                 //pos[2] += 1;
@@ -735,6 +752,27 @@
                             cout << "La distancia actual del monstruo con el pj es: " << difx[i] << ", " << dify[i] << endl; 
                         }
                         for(int k=0; k<2; k++){//num de monstruos en movimiento{
+                            
+                            //monstruos golpeando al pj
+                            if((difx[k]==0 && dify[k]==2) || (difx[k]==2 && dify[k]==0)){
+                                maxgolpes_--;
+                                cout << "Le han golpeado, le quedan: " << maxgolpes_ << "vidas." << endl;
+                                 if(maxgolpes_==3)
+                                        gametable[29][13]='3';
+                                        //setdatatablegame(29, 7+5,51);//3 5 corresponde a 'VIDA: ' a.size()
+                                    else if(maxgolpes_==2)
+                                        gametable[29][13]='2';//2
+                                    else if(maxgolpes_==1)
+                                        gametable[29][13]='1';    //setdatatablegame(29, 7+5,49);//1
+                                    else if(maxgolpes_==0)
+                                        gametable[29][13]='0';//setdatatablegame(29, 7+5,48);//0
+                                if(maxgolpes_==0){
+                                    showtableGame();
+                                    cout << "Ha muerto." << endl;
+                                    exit(0);
+                                }
+                                
+                            }
             
                                 //down
                                 if(fabs((posmonstersx_[k]+1)-getposxroom())< difx[k]) //si el pj esta a la derecha del monstruo
@@ -811,6 +849,26 @@
                             
                         }
                         for(int k=2; k<4; k++){//num de monstruos en movimiento{
+                                
+                                //monstruos golpeando
+                                if((difx[k-2]==0 && dify[k-2]==2) || (difx[k-2]==2 && dify[k-2]==0)){
+                                    maxgolpes_--;
+                                    cout << "Le han golpeado, le quedan: " << maxgolpes_ << "vidas." << endl;
+                                    if(maxgolpes_==3)
+                                            gametable[29][13]='3';
+                                            //setdatatablegame(29, 7+5,51);//3 5 corresponde a 'VIDA: ' a.size()
+                                        else if(maxgolpes_==2)
+                                            gametable[29][13]='2';//2
+                                        else if(maxgolpes_==1)
+                                            gametable[29][13]='1';    //setdatatablegame(29, 7+5,49);//1
+                                        else if(maxgolpes_==0)
+                                            gametable[29][13]='0';//setdatatablegame(29, 7+5,48);//0
+                                    if(maxgolpes_==0){
+                                        showtableGame();
+                                        cout << "Ha muerto." << endl;
+                                        exit(0);
+                                    }
+                                }
                             cout << "HEYSSSS " << difx[0] << fabs((posmonstersx_[k]+1)-getposxroom())<< endl;
             
                                 //down
@@ -878,6 +936,15 @@
                                 }
                             }
                     }
+                    /*for(int k=0; k< 2; k++){
+                        //Muerte pj por monstruo
+                        if((difx[k]==0 && dify[k]==1) || (difx[k]==1 && dify[k]==0)){
+                                maxgolpes_--;
+                                cout << "Le han golpeado, le quedan: " << maxgolpes_ << "vidas." << endl;
+                                if(maxgolpes_==0)
+                                    exit(0);
+                        }
+                    }*/
 
             
         }//si el movimiento es par movemos monstruos

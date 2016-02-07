@@ -38,6 +38,7 @@ int main(int argc, char *argv[])
          cout << a;
          a = ""; cout << a; cout << endl << endl;
          cout << "\t\t\t\t\t\t\t\t Desarrollado por Ivan Garcia Campos\n" << endl;
+         cout << "Actualmente los monstruos no se evaluan entre ellos para no ocupar el mismo espacio, se pueden matar entre ellos mientras buscan al pj" << endl;
       a = "";
          CGame E(3, 1,2, 3);
          

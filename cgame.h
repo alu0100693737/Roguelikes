@@ -56,7 +56,7 @@ public:
     void setposyroom(int);
 
     void leer();
-    void movepj(int i);
+    int movepj(int i);
     void showtableGame();
     void game();
 
