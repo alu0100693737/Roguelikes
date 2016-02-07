@@ -721,60 +721,166 @@
         }
         bool valido = false;//movimiento del monstruo valido
         setmax_mov();//-1
-        int dif0x = fabs(posmonstersx_[0]-getposxroom());
-        int dif0y = fabs(posmonstersy_[0]-getposyroom());
-        cout << "La distancia actual del monstruo con el pj es: " << dif0x << ", " << dif0y << endl; 
-        
+        int* difx = new int [2];
+        int* dify = new int[2];
+
         if(getmax_mov()%2==0)//movemos los monstruos
         {   cout << "HOLA" << posmonstersx_[0] << posmonstersy_[0] << endl;
+                    if(getposroom()==0)
+                    {   for (int i= 0; i< 2; i++)
+                        {
+                            difx[i] = fabs(posmonstersx_[i]-getposxroom());
+                            dify[i] = fabs(posmonstersy_[i]-getposyroom());
+                        
+                            cout << "La distancia actual del monstruo con el pj es: " << difx[i] << ", " << dify[i] << endl; 
+                        }
+                        for(int k=0; k<2; k++){//num de monstruos en movimiento{
             
-            if(getposroom()==0)
-            {   for(int k=0; k<2; k++){//num de monstruos en movimiento{
-                
- 
-                            //down
-                            if(fabs((posmonstersx_[0]+1)-getposxroom())< dif0x) //si el pj esta a la derecha del monstruo
-                            {
-                                setdatatablegame(posmonstersx_[k]+4, posmonstersy_[k]+5, '*');
-                                posmonstersx_[k]++;
-                                setdatatablegame(posmonstersx_[k]+4, posmonstersy_[k]+5, 'W');
-                                valido = true;
-                                cout << "quedan x:" << posmonstersx_<< endl;
-                                //break;
+                                //down
+                                if(fabs((posmonstersx_[k]+1)-getposxroom())< difx[k]) //si el pj esta a la derecha del monstruo
+                                {
+                                    setdatatablegame(posmonstersx_[k]+4, posmonstersy_[k]+5, '*');
+                                    posmonstersx_[k]++;
+                                    setdatatablegame(posmonstersx_[k]+4, posmonstersy_[k]+5, 'W');
+                                    valido = true;
+                                    cout << "quedan x:" << posmonstersx_<< endl;
+                                    //break;
+                                }
+                        //up
+                                else if(fabs((posmonstersx_[k]-1)-getposxroom())< difx[k]) //si el pj esta a la derecha del monstruo
+                                {
+                                    setdatatablegame(posmonstersx_[k]+4, posmonstersy_[k]+5, '*');
+                                    posmonstersx_[k]--;
+                                    setdatatablegame(posmonstersx_[k]+4, posmonstersy_[k]+5, 'W');
+                                    valido = true;
+                                    cout << "quedan x:" << posmonstersx_ << endl;
+                                    //break;
+                                }
+                        //right
+                                else if(fabs((posmonstersy_[k]+1)-getposyroom())< dify[k]) //si el pj esta a la derecha del monstruo
+                                {
+                                    setdatatablegame(posmonstersx_[k]+4, posmonstersy_[k]+5, '*');
+                                    posmonstersy_[k]++;
+                                    setdatatablegame(posmonstersx_[k]+4, posmonstersy_[k]+5, 'W');
+                                    valido = true;
+                                    cout << "quedan y:" << posmonstersy_ << endl;
+                                    //break;
+                                }//left
+                                else if(fabs((posmonstersy_[k]-1)-getposyroom())< dify[k]) //si el pj esta a la derecha del monstruo
+                                {
+                                    setdatatablegame(posmonstersx_[k]+4, posmonstersy_[k]+5, '*');
+                                    posmonstersy_[k]--;
+                                    setdatatablegame(posmonstersx_[k]+4, posmonstersy_[k]+5, 'W');
+                                    valido = true;
+                                    cout << "quedan y:" << posmonstersy_ << endl;
+                                    //break;
+                                }
                             }
-                       //up
-                            else if(fabs((posmonstersx_[k]-1)-getposxroom())< dif0x) //si el pj esta a la derecha del monstruo
-                            {
-                                setdatatablegame(posmonstersx_[k]+4, posmonstersy_[k]+5, '*');
-                                posmonstersx_[k]--;
-                                setdatatablegame(posmonstersx_[k]+4, posmonstersy_[k]+5, 'W');
-                                valido = true;
-                                cout << "quedan x:" << posmonstersx_ << endl;
-                                //break;
+                            for(int k=2; k< 4; k++){//resto de monstruos
+                                if(posmonstersx_[k]+2< getrooms().at(1)->getm()){//down
+                                    setdatatablegame(posmonstersx_[k]+4, posmonstersy_[k]+23, '*');
+                                    posmonstersx_[k]++;
+                                    setdatatablegame(posmonstersx_[k]+4, posmonstersy_[k]+23, 'W');
+                                    valido = true;
+                                }else if(posmonstersx_[k]-2 > 0){
+                                    setdatatablegame(posmonstersx_[k]+4, posmonstersy_[k]+23, '*');//up
+                                    posmonstersx_[k]--;
+                                    setdatatablegame(posmonstersx_[k]+4, posmonstersy_[k]+23, 'W');
+                                    valido = true;
+                                }else if(posmonstersy_[k]+2< getrooms().at(1)->getn()){//right
+                                    setdatatablegame(posmonstersx_[k]+4, posmonstersy_[k]+23, '*');
+                                    posmonstersx_[k]++;
+                                    setdatatablegame(posmonstersx_[k]+4, posmonstersy_[k]+23, 'W');
+                                    valido = true;
+                                }else if(posmonstersx_[k]-2 > 0){
+                                    setdatatablegame(posmonstersy_[k]+4, posmonstersy_[k]+23, '*');//left
+                                    posmonstersy_[k]--;
+                                    setdatatablegame(posmonstersy_[k]+4, posmonstersy_[k]+23, 'W');
+                                    valido = true;
+                                }
                             }
-                       //right
-                            else if(fabs((posmonstersy_[k]+1)-getposyroom())< dif0y) //si el pj esta a la derecha del monstruo
-                            {
-                                setdatatablegame(posmonstersx_[k]+4, posmonstersy_[k]+5, '*');
-                                posmonstersy_[k]++;
-                                setdatatablegame(posmonstersx_[k]+4, posmonstersy_[k]+5, 'W');
-                                valido = true;
-                                cout << "quedan y:" << posmonstersy_ << endl;
-                                //break;
-                            }//left
-                            else if(fabs((posmonstersy_[k]-1)-getposyroom())< dif0y) //si el pj esta a la derecha del monstruo
-                            {
-                                setdatatablegame(posmonstersx_[k]+4, posmonstersy_[k]+5, '*');
-                                posmonstersy_[k]--;
-                                setdatatablegame(posmonstersx_[k]+4, posmonstersy_[k]+5, 'W');
-                                valido = true;
-                                cout << "quedan y:" << posmonstersy_ << endl;
-                                //break;
+                    }else{ //pj en la segunda habitacion, comportamiento contrario. Hecho copy paste de anterior condicion. Hacer funcion especifica 
+                        cout << "CACA" << endl;
+                        for (int i= 0; i< 2; i++)
+                        {
+                            difx[i] = fabs(posmonstersx_[i+2]-getposxroom());
+                            dify[i] = fabs(posmonstersy_[i+2]-getposyroom());
+                        
+                            cout << "La distancia actual del monstruo con el pj es: " << difx[i] << ", " << dify[i] << endl; 
+                            cout <<"HEYSSS" << endl;
+                            
+                        }
+                        for(int k=2; k<4; k++){//num de monstruos en movimiento{
+                            cout << "HEYSSSS " << difx[0] << fabs((posmonstersx_[k]+1)-getposxroom())<< endl;
+            
+                                //down
+                                if(fabs((posmonstersx_[k]+1)-getposxroom())<= difx[k-2]) //si el pj esta a la derecha del monstruo
+                                {   cout << "Pos monstruo: " << posmonstersx_[k]+1 << "," << posmonstersy_[k] << "Pos pj: " << getposxroom() << "," << getposyroom() << endl;
+                                    cout << "VALOR DIFERENCIA: " << fabs((posmonstersx_[k]+1)-getposxroom()) << endl;
+                                    setdatatablegame(posmonstersx_[k]+4, posmonstersy_[k]+23, '*');
+                                    posmonstersx_[k]++;
+                                    setdatatablegame(posmonstersx_[k]+4, posmonstersy_[k]+23, 'W');
+                                    valido = true;
+                                    cout << "quedan x:" << posmonstersx_<< endl;
+                                    //break;
+                                }
+                                //up
+                                else if(fabs((posmonstersx_[k]-1)-getposxroom())<= difx[k-2]) //si el pj esta a la derecha del monstruo
+                                {
+                                    setdatatablegame(posmonstersx_[k]+4, posmonstersy_[k]+23, '*');
+                                    posmonstersx_[k]--;
+                                    setdatatablegame(posmonstersx_[k]+4, posmonstersy_[k]+23, 'W');
+                                    valido = true;
+                                    cout << "quedan x:" << posmonstersx_ << endl;
+                                    //break;
+                                }
+                                //right
+                                else if(fabs((posmonstersy_[k]+1)-getposyroom())<= dify[k-2]) //si el pj esta a la derecha del monstruo
+                                {
+                                    setdatatablegame(posmonstersx_[k]+4, posmonstersy_[k]+23, '*');
+                                    posmonstersy_[k]++;
+                                    setdatatablegame(posmonstersx_[k]+4, posmonstersy_[k]+23, 'W');
+                                    valido = true;
+                                    cout << "quedan y:" << posmonstersy_ << endl;
+                                    //break;
+                                }//left
+                                else if(fabs((posmonstersy_[k]-1)-getposyroom())<= dify[k-2]) //si el pj esta a la derecha del monstruo
+                                {
+                                    setdatatablegame(posmonstersx_[k]+4, posmonstersy_[k]+23, '*');
+                                    posmonstersy_[k]--;
+                                    setdatatablegame(posmonstersx_[k]+4, posmonstersy_[k]+23, 'W');
+                                    valido = true;
+                                    cout << "quedan y:" << posmonstersy_ << endl;
+                                    //break;
+                                }
                             }
-                       
-                }
-            }
-        }
+                            for(int k=0; k< 2; k++){//resto de monstruos
+                                if(posmonstersx_[k]+2< getrooms().at(0)->getm()){//down
+                                    setdatatablegame(posmonstersx_[k]+4, posmonstersy_[k]+5, '*');
+                                    posmonstersx_[k]++;
+                                    setdatatablegame(posmonstersx_[k]+4, posmonstersy_[k]+5, 'W');
+                                    valido = true;
+                                }else if(posmonstersx_[k]-2 > 0){
+                                    setdatatablegame(posmonstersx_[k]+4, posmonstersy_[k]+5, '*');//up
+                                    posmonstersx_[k]--;
+                                    setdatatablegame(posmonstersx_[k]+4, posmonstersy_[k]+5, 'W');
+                                    valido = true;
+                                }else if(posmonstersy_[k]+2< getrooms().at(0)->getn()){//right
+                                    setdatatablegame(posmonstersx_[k]+4, posmonstersy_[k]+5, '*');
+                                    posmonstersx_[k]++;
+                                    setdatatablegame(posmonstersx_[k]+4, posmonstersy_[k]+5, 'W');
+                                    valido = true;
+                                }else if(posmonstersx_[k]-2 > 0){
+                                    setdatatablegame(posmonstersy_[k]+4, posmonstersy_[k]+5, '*');//left
+                                    posmonstersy_[k]--;
+                                    setdatatablegame(posmonstersy_[k]+4, posmonstersy_[k]+5, 'W');
+                                    valido = true;
+                                }
+                            }
+                    }
+
+            
+        }//si el movimiento es par movemos monstruos
       //  delay(1);
        // m = rand()%10+9,(rand()%10+8);
                     
