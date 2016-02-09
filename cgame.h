@@ -89,6 +89,8 @@ public:
     void delay(int secs);
 
     bool cambioroom; //uso para no cambiar el + cuando se cambia de habitacion
+    
+    void pintarvida();
 
     //void operator=(CRoom(int, int));
 };
