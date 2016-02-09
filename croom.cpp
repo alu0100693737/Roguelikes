@@ -17,34 +17,69 @@ CRoom::CRoom(int level)
     srand(time(NULL));
     if(level==1){ //we need to stop 1 second to change de rand()
        delay(1);
-       m = rand()%10+9,(rand()%10+8);
+        cout << "\t\t\t\t\t\t\t┏━━━┓" << endl;
+        cout << "\t\t\t\t\t\t\t┃┏━━┛" << endl;
+        cout << "\t\t\t\t\t\t\t┃┗━━┓" << endl;
+        cout << "\t\t\t\t\t\t\t┃┏━┓┃" << endl;
+        cout << "\t\t\t\t\t\t\t┃┗━┛┃" << endl;
+        cout << "\t\t\t\t\t\t\t┗━━━┛" << endl << endl;
+
+       m = rand()%10+9,(rand()%10+7);
        delay(1);
-       n = rand()%10+7,(rand()%10+7);
+        cout << "\t\t\t\t\t\t\t┏━━━┓" << endl;
+        cout << "\t\t\t\t\t\t\t┃┏━━┛" << endl;
+        cout << "\t\t\t\t\t\t\t┃┗━━┓" << endl;
+        cout << "\t\t\t\t\t\t\t┗━━┓┃" << endl;
+        cout << "\t\t\t\t\t\t\t┏━━┛┃" << endl;
+        cout << "\t\t\t\t\t\t\t┗━━━┛" << endl << endl;
+       n = rand()%10+7,(rand()%10+6);
     }
 
     if(level==2){
        delay(1);
-       m = rand()%8+5,(rand()%8+5);
+        cout << "\t\t\t\t\t\t\t┏┓╋┏┓" << endl;
+        cout << "\t\t\t\t\t\t\t┃┃╋┃┃" << endl;
+        cout << "\t\t\t\t\t\t\t┃┗━┛┃" << endl;
+        cout << "\t\t\t\t\t\t\t┗━━┓┃" << endl;
+        cout << "\t\t\t\t\t\t\t╋╋╋┃┃" << endl;
+        cout << "\t\t\t\t\t\t\t╋╋╋┗┛" << endl << endl;
+       m = rand()%8+5,(rand()%8+6);
        delay(1);
-       n = rand()%8+5,(rand()%8+5);
+        cout << "\t\t\t\t\t\t\t┏━━━┓" << endl;
+        cout << "\t\t\t\t\t\t\t┃┏━┓┃" << endl;
+        cout << "\t\t\t\t\t\t\t┗┛┏┛┃" << endl;
+        cout << "\t\t\t\t\t\t\t┏┓┗┓┃" << endl;
+        cout << "\t\t\t\t\t\t\t┃┗━┛┃" << endl;
+        cout << "\t\t\t\t\t\t\t┗━━━┛" << endl << endl;
+       n = rand()%8+5,(rand()%8+3);
     }
     if(level==3){
        delay(1);
-       m = rand()%5+3,(rand()%5+3);
+        cout << "\t\t\t\t\t\t\t┏━━━┓" << endl;
+        cout << "\t\t\t\t\t\t\t┃┏━┓┃" << endl;
+        cout << "\t\t\t\t\t\t\t┗┛┏┛┃" << endl;
+        cout << "\t\t\t\t\t\t\t┏━┛┏┛" << endl;
+        cout << "\t\t\t\t\t\t\t┃┃┗━┓" << endl;
+        cout << "\t\t\t\t\t\t\t┗━━━┛" << endl << endl;
+       m = rand()%5+3,(rand()%5+4);
        delay(1);
+        cout << "\t\t\t\t\t\t\t ╋┏┓" << endl;
+        cout << "\t\t\t\t\t\t\t ┏┛┃" << endl;
+        cout << "\t\t\t\t\t\t\t ┗┓┃" << endl;
+        cout << "\t\t\t\t\t\t\t ╋┃┃" << endl;
+        cout << "\t\t\t\t\t\t\t ┏┛┗┓" << endl;
+        cout << "\t\t\t\t\t\t\t ┗━━┛" << endl << endl << endl << endl;
        n = rand()%5+3,(rand()%5+3);
     }
     //monsters_ = new CMonsters[NUMONSTERS];
     M_ = new char* [m];
     if(M_==NULL)
-        cerr << "Error creando la habitacion\n";
+        cerr << "\t\t\tError creando la habitacion\n";
     for(int i= 0; i< m; i++)
     {
         M_[i]= new char[n];
     }
 
-    //cout << "m vale: " << m << endl;
-    //cout << "n vale: " << n << endl;
     for(int i=0; i< m; i++)
     {
         for(int j=0; j < n; j++)
@@ -98,11 +133,8 @@ void CRoom::setlevel(int l){
 
 void CRoom::setpjdata(char car, int x, int y)
 {
-    //cout << x << y << endl;
-    //cout << "Hola"<< endl;
+
     M_[x][y]=car;
-    //cout << x << y << endl;
-    //cout << M_[0][0] << endl;
 }
 
 void CRoom::moveright(int i, int j){
@@ -142,4 +174,3 @@ void CRoom::delay(int secs) {
       for(int i = (time(NULL) + secs); time(NULL) != i; time(NULL));
 }
 
-//Falta LEVEL Aun no se utiliza en ningun sitio

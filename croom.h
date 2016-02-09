@@ -21,13 +21,9 @@ private:
     int n; //min 4, 2 for walls
     int level;
 
-
-
-
 public:
     CRoom();
     CRoom(int);
-    //CRoom(const CRoom& a); //not defined
     int pos(int, int);
     int getlevel();
     void setlevel(int);
@@ -41,9 +37,6 @@ public:
     void moveleft(int, int);
     void moveup(int, int);
     void movedown(int, int);
-
-
-
 
     void delay(int);//used with rand()
 

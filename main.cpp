@@ -10,6 +10,10 @@
 
 using namespace std;
 
+void delay(int secs) {
+            for(int i = (time(NULL) + secs); time(NULL) != i; time(NULL));
+        };
+        
 int main(int argc, char *argv[])
 {
     string a;
@@ -22,61 +26,41 @@ int main(int argc, char *argv[])
         a += "\n\t\t██║███╗██║██╔══╝  ██║     ██║     ██║   ██║██║╚██╔╝██║██╔══╝         ██║   ██║   ██║";
         a += "\n\t\t╚███╔███╔╝███████╗███████╗╚██████╗╚██████╔╝██║ ╚═╝ ██║███████╗       ██║   ╚██████╔╝";
         a += "\n\t\t ╚══╝╚══╝ ╚══════╝╚══════╝ ╚═════╝ ╚═════╝ ╚═╝     ╚═╝╚══════╝       ╚═╝    ╚═════╝ ";
-
+        cout << a << endl;
+        delay(3);
+        
         //cout << "\033[2J\033[1;1H"; //clear linux regexp
-         //cout << a;
 
         // cout << "\033[2J\033[1;1H";
-
+         a= "";
          a =  "\n\t\t██████╗  ██████╗  ██████╗ ██╗   ██╗███████╗██╗     ██╗██╗  ██╗███████╗███████╗";
          a += "\n\t\t██╔══██╗██╔═══██╗██╔════╝ ██║   ██║██╔════╝██║     ██║██║ ██╔╝██╔════╝██╔════╝";
          a += "\n\t\t██████╔╝██║   ██║██║  ███╗██║   ██║█████╗  ██║     ██║█████╔╝ █████╗  ███████╗";
          a += "\n\t\t██╔══██╗██║   ██║██║   ██║██║   ██║██╔══╝  ██║     ██║██╔═██╗ ██╔══╝  ╚════██║";
          a += "\n\t\t██║  ██║╚██████╔╝╚██████╔╝╚██████╔╝███████╗███████╗██║██║  ██╗███████╗███████║";
          a += "\n\t\t╚═╝  ╚═╝ ╚═════╝  ╚═════╝  ╚═════╝ ╚══════╝╚══════╝╚═╝╚═╝  ╚═╝╚══════╝╚══════╝";
-
+        
          cout << a;
-         a = ""; cout << a; cout << endl << endl;
+         cout << endl << endl;
          cout << "\t\t\t\t\t\t\t\t Desarrollado por Ivan Garcia Campos\n" << endl;
-         cout << "Actualmente los monstruos no se evaluan entre ellos para no ocupar el mismo espacio, se pueden matar entre ellos mientras buscan al pj" << endl;
-      a = "";
+         delay(2);
+         //cout << "\033[2J\033[1;1H"; //clear linux regexp
+          a= "";
+        
+         cout << endl << endl;
+         cout << "\t\t\t\t\t┏━━━┓╋╋╋╋╋╋╋╋╋╋╋╋╋╋╋┏┓" << endl;
+         cout << "\t\t\t\t\t┃┏━┓┃╋╋╋╋╋╋╋╋╋╋╋╋╋╋╋┃┃" << endl;
+         cout << "\t\t\t\t\t┃┃╋┗╋━━┳━┳━━┳━━┳━┓┏━┛┣━━┓" << endl;
+         cout << "\t\t\t\t\t┃┃╋┏┫┏┓┃┏┫┏┓┃┏┓┃┏┓┫┏┓┃┏┓┃" << endl;
+         cout << "\t\t\t\t\t┃┗━┛┃┏┓┃┃┃┗┛┃┏┓┃┃┃┃┗┛┃┗┛┣┳┳┓" << endl;
+         cout << "\t\t\t\t\t┗━━━┻┛┗┻┛┗━┓┣┛┗┻┛┗┻━━┻━━┻┻┻┛" << endl;
+         cout << "\t\t\t\t\t╋╋╋╋╋╋╋╋╋┏━┛┃" << endl;
+         cout << "\t\t\t\t\t╋╋╋╋╋╋╋╋╋┗━━┛" << endl;
+         
          CGame E(3, 1,2, 3);
          
-
-
          E.showtableGame();
          E.leer();
-         //cout << "\033[2J\033[1;1H"; //clear linux regexp
-         //cout << endl << endl;
-         //F.showGame();
          cout << endl << endl;
-       /*  for(int i=0; i< E.getrooms().at(0)->getm(); i++){
-             for(int j=0; j< E.getrooms().at(0)->getn(); j++){
-                cout <<  E.getrooms().at(0)->getdata(i,j) << " ";
-
-                //flush();
-             }cout << endl;
-
-
-        }
-*/
-
-    //cout << E.getrooms().at(0)->getm() << " " << E.getrooms().at(0)->getn();
-//Funcionan las habitaciones
-       /*  CRoom A(1);
-        for(int i=0; i< A.getm(); i++){
-            for(int j=0; j<A.getn(); j++)
-                cout << A.getdata(i,j);
-            cout << endl;
-
-
-        }/*
-         A.showRoom();
-         CRoom B(2);
-         B.showRoom();
-         CRoom C(3);
-         C.showRoom();*/
-
-    //QCoreApplication a(argc, argv);
-    //return a.exec();
+      
 }

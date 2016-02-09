@@ -39,7 +39,7 @@
                 pos[i]=1;
             
             //max movimientos
-            max_mov=60; 
+            max_mov=70; 
             
             doorm = new int[6];
             doorn = new int [6];
@@ -56,8 +56,6 @@
             
             for(int i = 0; i< nummonsters_; i++)
                 monsters_[i] = i;
-            
-            cout << "Num de monstruos: " << nummonsters_ << endl;
             
             for(int i=0; i< numrooms; i++)
             {
@@ -98,9 +96,9 @@
             getrooms().at(0)->setpjdata('=', doorm[5], doorn[5]);
             srand(time(NULL));
             delay(1);
-            int num1 = (rand()% getrooms().at(2)->getm())+1;
+            int num1 = (rand()% getrooms().at(2)->getm());
             delay(1);
-            int num2= (rand()%getrooms().at(2)->getn())+1;
+            int num2= (rand()%getrooms().at(2)->getn()/2);
             getrooms().at(2)->setpjdata('$', num1, num2);
 
             
@@ -149,8 +147,7 @@
             for(int i=0; i< a.size(); i++)
                 gametable[28][i+25] = a.at(i);
             
-            a= "VIDA:" ;
-            cout << "size de VIDA: " << a.size() << endl;
+             a= "VIDA:" ;
             //<< maxgolpes_.to_string();
             
             
@@ -169,28 +166,6 @@
             for(int i=0; i< a.size(); i++)
                 gametable[30][i+25] = a.at(i);
 
-
-            /*if(getmax_mov()>9)
-                a << "*  Movement:"<< getmax_mov() << "  Lives: " << getcharacter()->getlife() << "\t        ROGUELIK   E   S   *\n";
-            else
-                a << "*  Movement:"<< getmax_mov() << "  Lives: " << getcharacter()->getlife() << "\t                R   O   G   U   E   L   I   K   E   S   *\n";
-            a << "*\t                                =   =   =   #   #   *   *   %   %   %   *\n";*/
-            //Cuando se coja el amuleto
-            //getrooms().at(2)->setpjdata('+', doorm[4], doorn[4]);
-            //getrooms().at(0)->setpjdata('+', doorm[5], doorn[5]);
-
-
-            /*srand(time(NULL));
-            for(int i=0; i< numrooms; i++)
-            {
-                rooms[i] = new CRoom(1);
-        */
-                /*numrooms++;
-                CRoom aux = new CRoom(rand()%10+1,(rand()%10+1));
-                rooms[i] = CRoom(aux);
-
-                idrooms[i] = numrooms;
-            }*/
         }
 
         CGame::~CGame(){
@@ -205,14 +180,6 @@
             }
         }
 
-        /*void CGame::operator=(CRoom a)
-        {
-            this->idrooms
-        }*/
-
-        /*CRoom CGame::getrooms(int i){
-            return rooms[i];
-        }*/
 
         char CGame::getdatatablegame(int i, int j){
             return gametable[i][j];
@@ -398,37 +365,32 @@
             int valormuerte = 0; // si vale 1, fin del programa
             char aux;
             while(getmax_mov()>0){
-                
-                cout << "Le quedan: " << getmax_mov() << " ";
                 if(ccharacter_->getamuleto()==true){
-                    cout << "Tiene el amuleto." << endl;
-                    cout << "Debes volver a la posicion de salida para finalizar el juego" << endl;
+                    cout << "\t\t\tTiene el amuleto." << endl;
+                    cout << "\t\t\tDebes volver a la posicion de salida para finalizar el juego" << endl;
                 }
                 else 
                     cout << endl;
                 
                 if((getposroom()==0) && (getposxroom() ==1) && (getposyroom() ==1) && (ccharacter_->getamuleto()==true)){
-                    cout << "Juego terminado!!!!!!\n Felicidades!" << endl;
+                    cout << "\t\t\tJuego terminado!!!!!!\n \t\t\tFelicidades!" << endl;
                     return;
                     
                 }
 
-                cout << "\t\tEnter a movement: right(d), left(a), up(w), down(x): " << endl;
+                cout << "\t\t\tEnter a movement: right(d), left(a), up(w), down(x): " << endl;
                 cin >> aux;
-                cout << getrooms().at((getposroom()))->getm() << " " << getrooms().at((getposroom()))->getn() << endl;
-                //if((getrooms().at(getposroom())->getdata(getposxroom(), getposyroom())=='*')||(getrooms().at(getposroom())->getdata(getposxroom(), getposyroom()) =='+')){
-                    
+                cout << endl << endl;
+               
                 if (aux=='d' && ((getrooms().at((getposroom()))->getdata(getposxroom(),getposyroom()+1)==('$')))){//nos encontramos un amuleto
                 ccharacter_->setamuleto(true);
-                cout << "Debes volver a la posicion de salida para finalizar el juego" << endl;
+                cout << "\t\t\tDebes volver a la posicion de salida para finalizar el juego" << endl;
                 setdatatablegame(getposxroom()+20, getposyroom()+16, 'X');
                 showtableGame();
-                //getrooms().at((getposroom()))->setpjdata('X', getposxroom(),getposyroom()+1);
-                //movepj(1);
                     
                 }
                 else if((aux=='d' && getposyroom()<getrooms().at((getposroom()))->getn()-2)){//|| aux==ARROW_UP)
-                        cout << "Derecha y me encuentro dentro de una habitacion" << endl;
+                        cout << "\t\t\tDerecha y me encuentro dentro de una habitacion" << endl;
                         valormuerte= movepj(1);//right
                         if(valormuerte==1)
                             break;
@@ -438,8 +400,8 @@
                         valormuerte= movepj(1);
                         if(valormuerte==1)
                             break;
-                        cout << "Derecha y me encuentro una +" << endl;
-                        cout << "Pulse enter para cambiar a la siguiente habitacion" << endl;
+                        cout << "\t\t\tDerecha y me encuentro una +" << endl;
+                        cout << "\t\t\tPulse d para cambiar a la siguiente habitacion" << endl;
                         char text;
                         cin >> text;
                         if(text == 'd'){
@@ -449,87 +411,63 @@
                             setposroom(1);
                             pos[1] = ((getrooms().at(1)->getm()-1)/2);
                             pos[2] =0; //reset posyroom porque la puerta en la segunda habitacion en y vale cero
-                            //cout << "pos x: " << getposxroom() << " pos y: " << getposyroom() << endl;
-                            //setdatatablegame(((getrooms().at(1)->getm()-1)/2), 0, '|');
-                            //setdatapjrooms('o', 1, 1, 1);
-                            //setposyroom(1);
+                           
                             setdatatablegame(getdoor0m()+4,getdoor0n()+5, '+');
                             cambioroom= true;
                             setdatatablegame(getdoor1m()+4,getdoor1n()+23, 'o');
-                            ///cout << "HOLAAA" << endl;
+
                             setmax_mov();//-1
                             
                             showtableGame();
                         }
                 }
-                /*else if(aux=='d' && ((getrooms().at((getposroom()))->getdata(getposxroom(),getposyroom()+1)==('*')))){
-                    cout << "Derecha y me encuentro una *" << endl;
-                    movepj(1);//right
-                    
-                }*/
-            else if (aux=='a' && ((getrooms().at((getposroom()))->getdata(getposxroom(),getposyroom()-1)==('$')))){//nos encontramos un amuleto
+                else if (aux=='a' && ((getrooms().at((getposroom()))->getdata(getposxroom(),getposyroom()-1)==('$')))){//nos encontramos un amuleto
                     ccharacter_->setamuleto(true);
-                    cout << "Debes volver a la posicion de salida para finalizar el juego" << endl;
+                    cout << "\t\t\tDebes volver a la posicion de salida para finalizar el juego" << endl;
                     setdatatablegame(getposxroom()+20, getposyroom()+14, 'X');
                     showtableGame();
-                    //getrooms().at((getposroom()))->setpjdata('X', getposxroom(),getposyroom()-1);
-                    //movepj(2);//left
+                
                     
                 }
-                else if(aux=='a'&& getposyroom()>1)
+                else if(aux=='a'&& getposyroom()>1){
                         valormuerte= movepj(2);//left
                         if(valormuerte==1)
                             break;
-
-                /*else if (aux=='a' && ((getrooms().at((getposroom()))->getdata(getposxroom(),getposyroom()-1)=='+')||(getrooms().at((getposroom()))->getdata(getposxroom(),getposyroom()-1)=='#'))){
-                        movepj(2);//right
-                }*/
+                }
+            
                 else if (aux=='w' && ((getrooms().at((getposroom()))->getdata(getposxroom()-1,getposyroom())==('$')))){//nos encontramos un amuleto
                         ccharacter_->setamuleto(true);
-                        cout << "Debes volver a la posicion de salida para finalizar el juego" << endl;
+                        cout << "\t\t\tDebes volver a la posicion de salida para finalizar el juego" << endl;
                         setdatatablegame(getposxroom()+19, getposyroom()+15, 'X');
                         showtableGame();
-                        //getrooms().at((getposroom()))->setpjdata('X', getposxroom()-1,getposyroom());
-                        //movepj(3);//up
                 }
-                else if(aux=='w'&& getposxroom()>1)
+                else if(aux=='w'&& getposxroom()>1){
                         valormuerte= movepj(3);//up
                         if(valormuerte==1)
                             break;
-                        
+                }
                 else if (aux=='w' && (getrooms().at((getposroom()))->getdata(getposxroom()-1,getposyroom())=='+')){
                         
                     
                         valormuerte= movepj(3);//up
                         if(valormuerte==1)
                             break;
-                        cout << "Arriba y me encuentro una +" << endl;
-                        cout << "Pulse 'w' para cambiar a la siguiente habitacion" << endl;
+                        cout << "\t\t\tArriba y me encuentro una +" << endl;
+                        cout << "\t\t\tPulse 'w' para cambiar a la siguiente habitacion" << endl;
                         char text;
                         cin >> text;
                         if(text == 'w'){
                             cout << text << endl;
-                            
-                        /* doorm[1] = (getrooms().at(1)->getm()-1)/2;
-            doorn[1] = 0;*/
-                            /*setposxroom((getrooms().at(1)->getm()-1)/2);
-                            setposyroom(0);*/
-                            
+
                             getrooms().at((getposroom()))->setpjdata('+', getposxroom(),getposyroom()-1);
                             setposroom(0); //room
                             
                             pos[1] = (getrooms().at(0)->getm()-1);//la ultima puerta de la ultima habitacion a la primera se pondra cuando recojas el amuleto
                             pos[2] = (getrooms().at(0)->getn()-1)/2;
                             
-                        
-                            //cout << "pos x: " << getposxroom() << " pos y: " << getposyroom() << endl;
-                            //setdatatablegame(((getrooms().at(1)->getm()-1)/2), 0, '|');
-                            //setdatapjrooms('o', 1, 1, 1);
-                            //setposyroom(1);
                             setdatatablegame(getdoor4m()+20,getdoor4n()+15, '+');
                             cambioroom= true;
                             setdatatablegame(getdoor5m()+4,getdoor5n()+5, 'o');
-                            //cout << "HOLAAA" << endl;
                             setmax_mov();//-1
                             showtableGame();
                         }
@@ -537,11 +475,9 @@
                 }
                 else if (aux=='x' && ((getrooms().at((getposroom()))->getdata(getposxroom()+1,getposyroom())==('$')))){//nos encontramos un amuleto
                             ccharacter_->setamuleto(true);
-                            cout << "Debes volver a la posicion de salida para finalizar el juego" << endl;
+                            cout << "\t\t\tDebes volver a la posicion de salida para finalizar el juego" << endl;
                             setdatatablegame(getposxroom()+21, getposyroom()+15, 'X');
                             showtableGame();
-                            //getrooms().at((getposroom()))->setpjdata('X', getposxroom()+1,getposyroom());
-                            //movepj(4);
                 }
                 else if(aux=='x'&& getposxroom()<getrooms().at((getposroom()))->getm()-2)
                         movepj(4);//down
@@ -549,32 +485,20 @@
                 else if (aux=='x' && ((getrooms().at((getposroom()))->getdata(getposxroom()+1,getposyroom())=='+'))){
                         movepj(4);//down
                         
-                        cout << "Abajo y me encuentro una +" << endl;
-                        cout << "Pulse 'x' para cambiar a la siguiente habitacion" << endl;
+                        cout << "\t\t\tAbajo y me encuentro una +" << endl;
+                        cout << "\t\t\tPulse 'x' para cambiar a la siguiente habitacion" << endl;
                         char text;
                         cin >> text;
                         if(text == 'x'){
                             cout << text << endl;
-                            
-                        /* doorm[1] = (getrooms().at(1)->getm()-1)/2;
-            doorn[1] = 0;*/
-                            /*setposxroom((getrooms().at(1)->getm()-1)/2);
-                            setposyroom(0);*/
-                            
                             getrooms().at((getposroom()))->setpjdata('+', getposxroom(),getposyroom()-1);
                             setposroom(2); //room
                             pos[1] = (getrooms().at(2)->getm()-1)/2; //x
                             pos[2] = getrooms().at(2)->getn()-1;//y
                             
-                        
-                            //cout << "pos x: " << getposxroom() << " pos y: " << getposyroom() << endl;
-                            //setdatatablegame(((getrooms().at(1)->getm()-1)/2), 0, '|');
-                            //setdatapjrooms('o', 1, 1, 1);
-                            //setposyroom(1);
                             setdatatablegame(getdoor2m()+4,getdoor2n()+23, '+');
                             cambioroom= true;
                             setdatatablegame(getdoor3m()+20,getdoor3n()+15, 'o');
-                            //cout << "HOLAAA" << endl;
                             setmax_mov();//-1
                             showtableGame();
                         }
@@ -582,19 +506,17 @@
                 
                 else if (((aux=='a') || (aux=='d') || (aux=='w') || (aux=='x'))) //in a wall
                 {
-                    cout << "Siguiente casilla: " << getrooms().at((getposroom()))->getdata(getposxroom(),getposyroom()+1) << endl;
-                    cout << "\t\tThere is a wall in that box, try another move" << endl << endl;
-                    
+                    cout << "\t\t\tThere is a wall in that box, try another move" << endl << endl;
                     leer();
                 }else
                 {
-                    cout << "\t\tError in the character entered by keyboard. Try another."<< endl << endl;
+                    cout << "\t\t\tError in the character entered by keyboard. Try another."<< endl << endl;
                     leer();
                 }
                 //movepj(aux);//1 right, 2 left, 3 up, 4 down
             }
             if(getmax_mov()==0)
-                    cout << "Game over, try again"<< endl;
+                    cout << "\t\t\tGame over, try again"<< endl;
         }
 
 
@@ -618,7 +540,7 @@
                     {
                         //pos[2] += 1;
                         getrooms().at((getposroom()))->moveright(getposxroom(), getposyroom());
-                        cout << "No puedes volver a la primera habitacion" << endl;
+                        cout << "\t\t\tNo puedes volver a la primera habitacion" << endl;
                         if(cambioroom==false)
                             setdatatablegame(getposxroom()+4, getposyroom()+23, '*');
                         else
@@ -630,7 +552,7 @@
                     {   
                         //pos[2] += 1;
                         getrooms().at((getposroom()))->moveright(getposxroom(), getposyroom());
-                        cout << "No puedes volver a la segunda habitacion" << endl;
+                        cout << "\t\t\tNo puedes volver a la segunda habitacion" << endl;
                         if(cambioroom==false)
                             setdatatablegame(getposxroom()+20, getposyroom()+15, '*');
                         else
@@ -639,7 +561,7 @@
                         setposyroom(1);
                         setdatatablegame(getposxroom()+20, getposyroom()+15, 'o');
                     }else{
-                        cout << "ALEJATEE DEL MONSTRUO ANTES DE MORIRR!" << endl;
+                        cout << "\t\t\tALEJATEE DEL MONSTRUO ANTES DE MORIRR!" << endl;
                         maxgolpes_--;
                         pintarvida();
                     }
@@ -661,7 +583,7 @@
                     else if((getposroom()==1) && getdatatablegame(getposxroom()+4, getposyroom()+22) != 'W')
                     {
                         getrooms().at(getposroom())->moveleft(getposxroom(), getposyroom());
-                        cout << "No puedes volver a la primera habitacion" << endl;
+                        cout << "\t\t\tNo puedes volver a la primera habitacion" << endl;
                         if(cambioroom==false)
                             setdatatablegame(getposxroom()+4, getposyroom()+23, '*');
                         else
@@ -672,7 +594,7 @@
                     else if(getposroom()==2)
                     {
                         getrooms().at(getposroom())->moveleft(getposxroom(), getposyroom());
-                        cout << "No puedes volver a la segunda habitacion" << endl;
+                        cout << "\t\t\tNo puedes volver a la segunda habitacion" << endl;
                         if(cambioroom==false)
                             setdatatablegame(getposxroom()+20, getposyroom()+15, '*');
                         else
@@ -680,7 +602,7 @@
                         setposyroom(-1);
                         setdatatablegame(getposxroom()+20, getposyroom()+15, 'o');
                     }else{
-                        cout << "ALEJATEE DEL MONSTRUO ANTES DE MORIRR!" << endl;
+                        cout << "\t\t\tALEJATEE DEL MONSTRUO ANTES DE MORIRR!" << endl;
                         maxgolpes_--;
                         pintarvida();
                     }
@@ -700,7 +622,7 @@
                     else if((getposroom()==1) && getdatatablegame(getposxroom()+3, getposyroom()+23) != 'W')
                     {
                         getrooms().at(getposroom())->moveup(getposxroom(), getposyroom());
-                        cout << "No puedes volver a la primera habitacion" << endl;
+                        cout << "\t\t\tNo puedes volver a la primera habitacion" << endl;
                         if(cambioroom==false)
                             setdatatablegame(getposxroom()+4, getposyroom()+23, '*');
                         else
@@ -711,7 +633,7 @@
                     else if(getposroom()==2)
                     {
                         getrooms().at(getposroom())->moveup(getposxroom(), getposyroom());
-                        cout << "No puedes volver a la segunda habitacion" << endl;
+                        cout << "\t\t\tNo puedes volver a la segunda habitacion" << endl;
                         if(cambioroom==false)
                             setdatatablegame(getposxroom()+20, getposyroom()+15, '*');
                         else
@@ -719,7 +641,7 @@
                         setposxroom(-1);
                         setdatatablegame(getposxroom()+20, getposyroom()+15, 'o');
                     }else {
-                        cout << "ALEJATEE DEL MONSTRUO ANTES DE MORIRR!" << endl;
+                        cout << "\t\t\tALEJATEE DEL MONSTRUO ANTES DE MORIRR!" << endl;
                         maxgolpes_--;
                         pintarvida();
                     }
@@ -739,7 +661,7 @@
                     else if((getposroom()==1) && getdatatablegame(getposxroom()+5, getposyroom()+23) != 'W')
                     {
                         getrooms().at(getposroom())->movedown(getposxroom(), getposyroom());
-                        cout << "No puedes volver a la primera habitacion" << endl;
+                        cout << "\t\t\tNo puedes volver a la primera habitacion" << endl;
                         if(cambioroom==false)
                             setdatatablegame(getposxroom()+4, getposyroom()+23, '*');
                         else
@@ -750,7 +672,7 @@
                     else if(getposroom()==2)
                     {
                         getrooms().at(getposroom())->movedown(getposxroom(), getposyroom());
-                        cout << "No puedes volver a la segunda habitacion" << endl;
+                        cout << "\t\t\tNo puedes volver a la segunda habitacion" << endl;
                         if(cambioroom==false)
                             setdatatablegame(getposxroom()+20, getposyroom()+15, '*');
                         else
@@ -758,7 +680,7 @@
                         setposxroom(1);
                         setdatatablegame(getposxroom()+20, getposyroom()+15, 'o');
                     }else{
-                        cout << "ALEJATEE DEL MONSTRUO ANTES DE MORIRR!" << endl;
+                        cout << "\t\t\tALEJATEE DEL MONSTRUO ANTES DE MORIRR!" << endl;
                         maxgolpes_--;
                     }
                     cambioroom=false;
@@ -769,14 +691,14 @@
             int* dify = new int[2];
 
             if(getmax_mov()%2==0)//movemos los monstruos
-            {   cout << "HOLA" << posmonstersx_[0] << posmonstersy_[0] << endl;
+            {   //cout << "posicion x,y" << posmonstersx_[0] << posmonstersy_[0] << endl;
                         if(getposroom()==0)
                         {   for (int i= 0; i< 2; i++)
                             {
                                 difx[i] = fabs(posmonstersx_[i]-getposxroom());
                                 dify[i] = fabs(posmonstersy_[i]-getposyroom());
                             
-                                cout << "La distancia actual del monstruo con el pj es: " << difx[i] << ", " << dify[i] << endl; 
+                                //cout << "La distancia actual del monstruo con el pj es: " << difx[i] << ", " << dify[i] << endl; 
                             }
                             for(int k=0; k<2; k++){//num de monstruos en movimiento{
                                 
@@ -784,7 +706,6 @@
                                 if((difx[k]==0 && dify[k]==2) || (difx[k]==2 && dify[k]==0)){
                                     maxgolpes_--;
                                     pintarvida();
-                                    cout << "Le han golpeado, le quedan: " << maxgolpes_ << "vidas." << endl;
                                 }
                                 //Monstruos misma habitacion //Si entran en conflicto, uno de ellos no se mueve
                                     //down
@@ -795,14 +716,12 @@
                                             posmonstersx_[k]++;
                                             setdatatablegame(posmonstersx_[k]+4, posmonstersy_[k]+5, 'W');
                                             valido = true;
-                                            cout << "quedan x:" << posmonstersx_<< endl;
-                                            //break;
                                         }else{
                                             maxgolpes_--;
                                             pintarvida();
                                         }
                                     }
-                            //up
+                                    //up
                                     else if(fabs((posmonstersx_[k]-1)-getposxroom())< difx[k]&& (getdatatablegame(posmonstersx_[k]+3, posmonstersy_[k]+5) !='W')) //si el pj esta a la derecha del monstruo
                                     {
                                         if(getdatatablegame(posmonstersx_[k]+3, posmonstersy_[k]+5)!= 'o'){
@@ -810,14 +729,12 @@
                                             posmonstersx_[k]--;
                                             setdatatablegame(posmonstersx_[k]+4, posmonstersy_[k]+5, 'W');
                                             valido = true;
-                                            cout << "quedan x:" << posmonstersx_ << endl;
-                                            //break;
                                         }else{
                                             maxgolpes_--;
                                             pintarvida();
                                         }
                                     }
-                            //right
+                                    //right
                                     else if(fabs((posmonstersy_[k]+1)-getposyroom())< dify[k] && (getdatatablegame(posmonstersx_[k]+4, posmonstersy_[k]+6) !='W')) //si el pj esta a la derecha del monstruo
                                     {
                                         if(getdatatablegame(posmonstersx_[k]+4, posmonstersy_[k]+6)!= 'o'){
@@ -825,8 +742,6 @@
                                             posmonstersy_[k]++;
                                             setdatatablegame(posmonstersx_[k]+4, posmonstersy_[k]+5, 'W');
                                             valido = true;
-                                            cout << "quedan y:" << posmonstersy_ << endl;
-                                            //break;
                                         }else{
                                             maxgolpes_--;
                                             pintarvida();
@@ -840,19 +755,15 @@
                                             posmonstersy_[k]--;
                                             setdatatablegame(posmonstersx_[k]+4, posmonstersy_[k]+5, 'W');
                                             valido = true;
-                                            cout << "quedan y:" << posmonstersy_ << endl;
-                                            //break;
+                                           
                                         }else{
                                             maxgolpes_--;
                                             pintarvida();
                                         }
                                     }else{
-                                        cout << "ALEJATEE DEL MONSTRUO ANTES DE MORIRR!" << endl;
+                                        cout << "\t\t\tALEJATEE DEL MONSTRUO ANTES DE MORIRR!" << endl;
                                         maxgolpes_--;
                                         pintarvida();
-
-                                        
-                                        cout << "Vida: " << maxgolpes_ << endl;
                                     }
                                     
                                 }
@@ -880,14 +791,10 @@
                                     }
                                 }
                         }else{ //pj en la segunda habitacion, comportamiento contrario. Hecho copy paste de anterior condicion. Hacer funcion especifica 
-                            cout << "CACA" << endl;
                             for (int i= 0; i< 2; i++)
                             {
                                 difx[i] = fabs(posmonstersx_[i+2]-getposxroom());
                                 dify[i] = fabs(posmonstersy_[i+2]-getposyroom());
-                            
-                                cout << "La distancia actual del monstruo con el pj es: " << difx[i] << ", " << dify[i] << endl; 
-                                cout <<"HEYSSS" << endl;
                                 
                             }
                             for(int k=2; k<4; k++){//num de monstruos en movimiento{
@@ -896,23 +803,17 @@
                                     if((difx[k-2]==0 && dify[k-2]==2) || (difx[k-2]==2 && dify[k-2]==0)){
                                         maxgolpes_--;
                                         pintarvida();
-                                        cout << "Le han golpeado, le quedan: " << maxgolpes_ << "vidas." << endl;
                                     }
-                                cout << "HEYSSSS " << difx[0] << fabs((posmonstersx_[k]+1)-getposxroom())<< endl;
                 
                                     //down
                                     if(fabs((posmonstersx_[k]+1)-getposxroom())<= difx[k-2] && (getdatatablegame(posmonstersx_[k]+5, posmonstersy_[k]+23) !='W')) //si el pj esta a la derecha del monstruo
-                                    {   cout << "Pos monstruo: " << posmonstersx_[k]+1 << "," << posmonstersy_[k] << "Pos pj: " << getposxroom() << "," << getposyroom() << endl;
-                                        cout << "VALOR DIFERENCIA: " << fabs((posmonstersx_[k]+1)-getposxroom()) << endl;
-                                        
+                                    {   
                                         if(getdatatablegame(posmonstersx_[k]+5, posmonstersy_[k]+23)!= 'o'){
                                             setdatatablegame(posmonstersx_[k]+4, posmonstersy_[k]+23, '*');
                                             posmonstersx_[k]++;
                                             setdatatablegame(posmonstersx_[k]+4, posmonstersy_[k]+23, 'W');
                                             valido = true;
-                                            cout << "quedan x:" << posmonstersx_<< endl;
                                             showtableGame();
-                                            //break;
                                         }else{
                                             maxgolpes_--;
                                             pintarvida();
@@ -926,9 +827,7 @@
                                             posmonstersx_[k]--;
                                             setdatatablegame(posmonstersx_[k]+4, posmonstersy_[k]+23, 'W');
                                             valido = true;
-                                            cout << "quedan x:" << posmonstersx_ << endl;
                                             showtableGame();
-                                            //break;
                                         }else{
                                             maxgolpes_--;
                                             pintarvida();
@@ -942,9 +841,7 @@
                                             posmonstersy_[k]++;
                                             setdatatablegame(posmonstersx_[k]+4, posmonstersy_[k]+23, 'W');
                                             valido = true;
-                                            cout << "quedan y:" << posmonstersy_ << endl;
                                             showtableGame();
-                                            //break;
                                         }else{
                                             maxgolpes_--;
                                             pintarvida();
@@ -957,15 +854,13 @@
                                             posmonstersy_[k]--;
                                             setdatatablegame(posmonstersx_[k]+4, posmonstersy_[k]+23, 'W');
                                             valido = true;
-                                            cout << "quedan y:" << posmonstersy_ << endl;
                                             showtableGame();
-                                            //break;
                                         }else{
                                             maxgolpes_--;
                                             pintarvida();
                                         }
                                     }else{
-                                        cout << "ALEJATEE DEL MONSTRUO ANTES DE MORIRR!" << endl;
+                                        cout << "\t\t\tALEJATEE DEL MONSTRUO ANTES DE MORIRR!" << endl;
                                         maxgolpes_--;
                                         pintarvida();
                                     }
@@ -994,55 +889,8 @@
                                     }
                                 }
                         }
-                        /*for(int k=0; k< 2; k++){
-                            //Muerte pj por monstruo
-                            if((difx[k]==0 && dify[k]==1) || (difx[k]==1 && dify[k]==0)){
-                                    maxgolpes_--;
-                                    cout << "Le han golpeado, le quedan: " << maxgolpes_ << "vidas." << endl;
-                                    if(maxgolpes_==0)
-                                        exit(0);
-                            }
-                        }*/
-
-                
             }//si el movimiento es par movemos monstruos
-        //  delay(1);
-        // m = rand()%10+9,(rand()%10+8);
-                        
-                        /*if(dif0x>0){
-                            if(fabs((posmonstersx_[0]+1)-getposxroom())< dif0x) //si el pj esta a la derecha del monstruos
-                            {
-                                getrooms().at(0)->setpjdata('*', posmonstersx_[0], posmonstersy_[0]);
-                                posmonstersx_[0]++;
-                                getrooms().at(0)->setpjdata('W', posmonstersx_[0], posmonstersy_[0]);
-                                
-                            }
-                            else{//monstruo a la izquierda
-                                getrooms().at(0)->setpjdata('*', posmonstersx_[0], posmonstersy_[0]);
-                                posmonstersx_[0]--;
-                                getrooms().at(0)->setpjdata('W', posmonstersx_[0], posmonstersy_[0]);
-                            }
-                        }else if(dif0y>1){
-                            if(fabs((posmonstersx_[0]+1)-getposxroom())< dif0y) //si el pj esta a la derecha del monstruos
-                            {
-                                getrooms().at(0)->setpjdata('*', posmonstersx_[0], posmonstersy_[0]);
-                                posmonstersx_[0]++;
-                                getrooms().at(0)->setpjdata('W', posmonstersx_[0], posmonstersy_[0]);
-                                
-                            }
-                            else{//monstruo a la izquierda
-                                getrooms().at(0)->setpjdata('*', posmonstersx_[0], posmonstersy_[0]);
-                                posmonstersx_[0]--;
-                                getrooms().at(0)->setpjdata('W', posmonstersx_[0], posmonstersy_[0]);
-                            }
-                        }else if(dif0y== 1)
-                            maxgolpes_--;
-                        else
-                            cout << "Error " << endl;
-                    }//for*/
-
-            
-            
+        
             if(primermovimiento==false){
                 primermovimiento= true;
                 setdatatablegame(5, 6,'U');//marcamos la casilla de salida
@@ -1054,11 +902,14 @@
 
 
         void CGame::showtableGame(){
+            cout << endl;
             for(int i=0; i<35; i++){
+                cout <<"\t\t";
                 for(int j=0; j< 40; j++)
                     cout << getdatatablegame(i,j) << " ";
                 cout << endl;
             }
+            cout << "\t\t\tLe quedan: " << getmax_mov() << " " << endl;
         }
 
         void CGame::game(){
@@ -1092,5 +943,4 @@
                 cout << "Ha muerto." << endl;
                 exit(0);
             }
-            showtableGame();
         }
